@@ -5,22 +5,36 @@ import { SeekerHomePage } from "../pages/seeker/SeekerHomePage"
 import { OwnerHomePage } from "../pages/owner/OwnerHomePage"
 import { AdminHomePage } from "../pages/admin/AdminHomePage"
 import { AllUserList } from "../components/admin/AllUserList"
-import { AllPropertyList } from "../components/AllPropertyList"
+import { AboutUs } from "../components/utils/AboutUs"
+import { Bookings } from "../components/seeker/Bookings"
+import { Feedbacks } from "../components/seeker/Feedbacks"
+import { Help } from '../components/seeker/Help'
+import { PropertyList } from "../components/seeker/PropertyList"
+import { Wishlist } from "../components/seeker/Wishlist"
+import { Reports } from "../components/utils/Reports"
+import { Profile } from "../components/utils/Profile"
 
 const router = createBrowserRouter([
   {path:"/", element:<Login />},
   {path:"/signUp", element: <SignUp/>},
+  {path: "/aboutUs", element: <AboutUs/>},
 
   {path:"/seeker", element: <SeekerHomePage/>,
     children: [
-      {path:"allPropertyList", element: <AllPropertyList/>}
+      {path:"bookings", element:<Bookings/>},
+      {path:"feedback", element:<Feedbacks/>},
+      {path:"help", element:<Help/>},
+      {path:"propertyList", element:<PropertyList/>},
+      {path:"wishList", element:<Wishlist/>},
+      {path: "aboutUs", element: <AboutUs/>},
+      {path:"reports", element:<Reports/>},
+      {path:"profile", element:<Profile/>},
     ]
   },
   {path:"/owner", element: <OwnerHomePage/>},
   {path:"/admin", element: <AdminHomePage/>, 
     children: [
       {path:"allUserList", element: <AllUserList/>},
-      {path:"allPropertyList", element: <AllPropertyList/>}
     ]
   }
 
