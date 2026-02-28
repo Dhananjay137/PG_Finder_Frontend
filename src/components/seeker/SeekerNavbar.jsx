@@ -1,4 +1,4 @@
-import { BookmarkCheck, Heart, HelpCircle, icons, Info, LogOut, MessageSquare, MessageSquareWarning, User } from 'lucide-react'
+import { BookmarkCheck, ChevronDown, Heart, HelpCircle, Info, LogOut, Menu, MessageSquare, MessageSquareWarning, User, XLineTop } from 'lucide-react'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -23,11 +23,11 @@ export const SeekerNavbar = () => {
 
   return (
     <nav className='border-b border-gray-200 z-50 shadow-sm'>
-      {/* desktop */}
-      <div className='flex flex-row justify-between mx-3 my-2'>
+      {/* general nav */}
+      <div className='flex flex-row items-center justify-between mx-3 my-2'>
 
         {/* logo */}
-        <div className='flex items-center text-md'>
+        <div className='flex items-center text-lg'>
           <h2 className='font-bold text-blue-600'>PG Finder</h2>
         </div>
 
@@ -35,25 +35,26 @@ export const SeekerNavbar = () => {
         <div className='hidden md:flex flex-row items-center space-x-8 text-sm'>
 
           {navTabs.map((tab, index) => { return(
-            <Link className='underline decoration-transparent underline-offset-[6px] decoration-2 hover:decoration-blue-500 transition-all duration-300 font-medium' to={tab.path} key={index}>{tab.name}</Link>
+            <Link className='text-gray-600 underline decoration-transparent underline-offset-[6px] decoration-2 hover:decoration-blue-500 transition-all duration-300 font-medium' to={tab.path} key={index}>{tab.name}</Link>
           )})}
 
           {/* profile - details, update profile, my reports, my feedback, logout */}
           <div className='relative'>
-            <button className='flex item-center' onClick={() => setIsProfileOpen(!isProfileOpen)}>
+            <button className='flex items-center gap-2 bg-gray-50 p-1 rounded-full text-sm' onClick={() => setIsProfileOpen(!isProfileOpen)}>
               <div className='flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 border border-blue-200 text-blue-700 font-medium'>
               P
               </div>
+              <ChevronDown size={18} className={`text-gray-500 transition-transform duration-300 ${isProfileOpen? 'rotate-180':''}`}/>
             </button>
 
             {isProfileOpen && <div className='absolute right-0 z-50 shadow-sm bg-white border border-gray-200 p-3 rounded-sm w-48'>
               {profileTabs.map((tag, index) => { return(
-                <Link to={tag.path} key={index} className='flex items-center text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors gap-4 px-6 py-3 mb-2'>
+                <Link to={tag.path} key={index} className='flex items-center text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors duration-200 gap-4 px-6 py-3 mb-2'>
                   <span>{tag.icon}</span>
                   {tag.name}
                 </Link>
               )})}
-              <div className='text-gray-700 bg-gray-100 px-6 py-3 rounded-sm transition-all duration-200 cursor-pointer text-center hover:text-red-700 hover:bg-red-100 border border-transparent hover:border-red-200'>
+              <div className='text-gray-700 bg-gray-100 px-6 py-3 rounded-sm transition-all duration-200 cursor-pointer text-center hover:text-red-700 hover:bg-red-100 border border-transparent hover:border-red-200 transition-all duration-200'>
                 <button>Log Out</button>
               </div>
             </div>}
@@ -62,7 +63,9 @@ export const SeekerNavbar = () => {
         </div> 
           
         <div className='md:hidden'>
-          <button onClick={() => setIsMobileOpen(!isMobileOpen)}>=</button>
+          <button className='transition-transform duration-200' onClick={() => setIsMobileOpen(!isMobileOpen)}>
+            {isMobileOpen?<XLineTop size={18}/>: <Menu size={18}/>}
+          </button>
         </div>
       </div>
 
