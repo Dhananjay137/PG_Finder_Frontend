@@ -86,7 +86,6 @@ export const SignUp = () => {
             <select {...register("role", validationSchema.roleValidator)} className="w-full border rounded-md p-2 mt-1 bg-white">
               <option value="seeker">Seeker</option>
               <option value="owner">Owner</option>
-              <option value="admin">Admin</option>
             </select>
             {errors.role && <p className="text-red-500 text-xs">{errors.role.message}</p>}
           </div>

@@ -13,6 +13,9 @@ import { PropertyList } from "../components/seeker/PropertyList"
 import { Wishlist } from "../components/seeker/Wishlist"
 import { Reports } from "../components/utils/Reports"
 import { Profile } from "../components/utils/Profile"
+import { AddProperty } from "../components/owner/AddProperty"
+import { PGDetails } from "../components/utils/PGDetails"
+import { FlatDetails } from "../components/utils/FlatDetails"
 
 const router = createBrowserRouter([
   {path:"/", element:<Login />},
@@ -29,9 +32,18 @@ const router = createBrowserRouter([
       {path: "aboutUs", element: <AboutUs/>},
       {path:"reports", element:<Reports/>},
       {path:"profile", element:<Profile/>},
+      {path:"pgDetails/:propertyId", element:<PGDetails/>},
+      {path:"flatDetails/:propertyID", element:<FlatDetails/>}
     ]
   },
-  {path:"/owner", element: <OwnerHomePage/>},
+  {path:"/owner", element: <OwnerHomePage/>,
+    children:[
+      {path:"aboutUs", element:<AboutUs/>},
+      {path:"profile", element:<Profile/>},
+      {path:"reports", element:<Reports/>},
+      {path:"addProperty", element:<AddProperty/>}
+    ]
+  },
   {path:"/admin", element: <AdminHomePage/>, 
     children: [
       {path:"allUserList", element: <AllUserList/>},

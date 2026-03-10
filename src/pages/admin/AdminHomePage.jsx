@@ -4,8 +4,7 @@ import { Outlet } from 'react-router-dom'
 
 export const AdminHomePage = () => {
   return (
-    <div>
-      <h1>AdminHomePage</h1>
+    <div className='flex'>
       <AdminSidebar/>
       <Outlet/>
     </div>
