@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -37,9 +38,23 @@ export const SignUp = () => {
     lookingForPartnerValidator: { required:{value:true, message:"atleast one option is required"}}
   }
 
-  const onSubmit = (data) => {
-    console.log(data);
-    navigate("/")
+  const onSubmit = async (data) => {
+    // console.log(data);
+    // navigate("/")
+    console.log(data)
+    try {
+      const res = await axios.post("/user/register",data)
+      console.log(res)
+      if(res.status == 201){
+        alert(res.data.message)
+        console.log('register user: ',res.data.data)
+        navigate("/")
+      }
+
+
+    } catch(err) {
+      alert("err")
+    }
   }
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
@@ -123,7 +138,7 @@ export const SignUp = () => {
                 className="text-blue-600 font-semibold hover:text-blue-800 hover:underline transition-colors" 
                 to="/"
               >
-                Login here
+                Sign Up here
               </Link>
             </p>
           </div>
