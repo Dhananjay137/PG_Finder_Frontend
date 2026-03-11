@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export const SignUp = () => {
 
@@ -38,22 +39,24 @@ export const SignUp = () => {
     lookingForPartnerValidator: { required:{value:true, message:"atleast one option is required"}}
   }
 
-  const onSubmit = async (data) => {
+  const submitHandler = async (data) => {
     // console.log(data);
     // navigate("/")
-    console.log(data)
+    
     try {
       const res = await axios.post("/user/register",data)
       console.log(res)
       if(res.status == 201){
-        alert(res.data.message)
-        console.log('register user: ',res.data.data)
+        toast.success(res.data.message)
+        //console.log('register user: ',res.data.data)
         navigate("/")
       }
 
 
     } catch(err) {
-      alert("err")
+      //console.log(err.response)
+      toast.error(err.response.data.message)
+
     }
   }
   return (
@@ -61,7 +64,7 @@ export const SignUp = () => {
       <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl">
         <h2 className="text-2xl font-bold mb-6 text-gray-800">Create an Account</h2>
         
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit(submitHandler)} className="space-y-4">
           {/* Name Section - 3 Columns */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>

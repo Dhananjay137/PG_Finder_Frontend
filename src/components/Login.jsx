@@ -1,6 +1,8 @@
+import axios from 'axios'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 export const Login = () => {
   // Destructure errors from formState
@@ -24,9 +26,30 @@ export const Login = () => {
     }
   }
 
-  const submitHandler = (data) => {
-    console.log(data)
-    navigate("/seeker")
+  const submitHandler = async (data) => {
+    // console.log(data)
+    // navigate("/seeker")
+    
+    try{
+      const res = await axios.post("/user/login",data)
+      console.log(res)
+      if(res.status == 200){
+        toast.success(res.data.message)
+        const role = res.data.role
+
+        switch(role){
+          case "seeker": navigate("/seeker")
+          break;
+          case "owner": navigate("/owner") 
+          break;
+          case "admin": navigate("/admin")
+          break;
+        }
+      }
+    } catch(err) {
+      console.log(err.response)
+      toast.error(err.response.data.message)
+    }
   }
 
   return (
