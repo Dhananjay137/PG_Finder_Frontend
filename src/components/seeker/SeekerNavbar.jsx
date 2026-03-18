@@ -1,10 +1,27 @@
-import { BookmarkCheck, ChevronDown, Heart, HelpCircle, Info, LogOut, Menu, MessageSquare, MessageSquareWarning, User, XLineTop } from 'lucide-react'
-import React, { useState } from 'react'
+import axios from 'axios'
+import { BookmarkCheck, ChevronDown, Heart, HelpCircle, House, Info, LogOut, Menu, MessageSquare, MessageSquareWarning, User, XLineTop } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { getUser } from '../utils/getUser'
 
 export const SeekerNavbar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const [isProfileOpen, setIsProfileOpen] = useState(false)
+
+  const [ userId, setUserId ] = useState('69b3a9c5dedfbdfd03c51f89')
+  const [ userFirstName, setUserFirstName ] = useState('')
+
+  useEffect(()=> {
+    const fetch = async() => {
+      let data = await getUser(userId)
+      //console.log(data)
+      setUserFirstName(data.firstName)
+    }
+    fetch()
+  },[userId])
+
+  
 
   // const dekstopProfileTags = ['Details','Update','Reports','Feedback','Log Out']
   const profileTabs = [
@@ -15,6 +32,7 @@ export const SeekerNavbar = () => {
   ]
   // const navTabs = ['About Us','Wishlist','Bookings','Help']
   const navTabs = [
+    {name:'Home',path:'/seeker/home',icon:<House size={18}></House>},
     {name:'About Us',path:'/seeker/aboutUs',icon:<Info size={18}/>},
     {name:'Wishlist',path:'/seeker/wishlist',icon:<Heart size={18}/>},
     {name:'Bookings',path:'/seeker/bookings',icon:<BookmarkCheck size={18}/>},
@@ -22,9 +40,9 @@ export const SeekerNavbar = () => {
   ]
 
   return (
-    <nav className='border-b border-gray-200 z-50 shadow-sm'>
+    <nav className='border-b border-gray-200 sticky top-0 z-50 shadow-sm bg-white'>
       {/* general nav */}
-      <div className='flex flex-row items-center justify-between mx-3 my-2'>
+      <div className='flex flex-row items-center justify-between mx-3 h-16'>
 
         {/* logo */}
         <div className='flex items-center text-lg'>
@@ -42,7 +60,7 @@ export const SeekerNavbar = () => {
           <div className='relative'>
             <button className='flex items-center gap-2 bg-gray-50 p-1 rounded-full text-sm' onClick={() => setIsProfileOpen(!isProfileOpen)}>
               <div className='flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 border border-blue-200 text-blue-700 font-medium'>
-              P
+              {(userFirstName?.at(0))?.toUpperCase() || '@'}
               </div>
               <ChevronDown size={18} className={`text-gray-500 transition-transform duration-300 ${isProfileOpen? 'rotate-180':''}`}/>
             </button>

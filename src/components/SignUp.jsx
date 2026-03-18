@@ -40,7 +40,7 @@ export const SignUp = () => {
   }
 
   const submitHandler = async (data) => {
-    // console.log(data);
+    console.log(data);
     // navigate("/")
     
     try {
@@ -102,8 +102,8 @@ export const SignUp = () => {
           <div>
             <label className="block text-sm font-medium text-gray-700">Select Role</label>
             <select {...register("role", validationSchema.roleValidator)} className="w-full border rounded-md p-2 mt-1 bg-white">
-              <option value="seeker">Seeker</option>
-              <option value="owner">Owner</option>
+              <option value="SEEKER">Seeker</option>
+              <option value="OWNER">Owner</option>
             </select>
             {errors.role && <p className="text-red-500 text-xs">{errors.role.message}</p>}
           </div>

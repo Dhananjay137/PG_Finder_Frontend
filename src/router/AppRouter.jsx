@@ -4,18 +4,24 @@ import { Login } from "../components/Login"
 import { SeekerHomePage } from "../pages/seeker/SeekerHomePage"
 import { OwnerHomePage } from "../pages/owner/OwnerHomePage"
 import { AdminHomePage } from "../pages/admin/AdminHomePage"
-import { AllUserList } from "../components/admin/AllUserList"
 import { AboutUs } from "../components/utils/AboutUs"
 import { Bookings } from "../components/seeker/Bookings"
 import { Feedbacks } from "../components/seeker/Feedbacks"
 import { Help } from '../components/seeker/Help'
-import { PropertyList } from "../components/seeker/PropertyList"
 import { Wishlist } from "../components/seeker/Wishlist"
 import { Reports } from "../components/utils/Reports"
 import { Profile } from "../components/utils/Profile"
 import { AddProperty } from "../components/owner/AddProperty"
 import { PGDetails } from "../components/utils/PGDetails"
 import { FlatDetails } from "../components/utils/FlatDetails"
+import { Home } from "../components/seeker/Home"
+import { AdminDashboard } from "../components/admin/AdminDashboard"
+import { UserList } from "../components/admin/UserList"
+import { PropertyList } from "../components/admin/PropertyList"
+import { VerificationDocumentList } from "../components/admin/VerificationDocumentList"
+import { BookingList } from "../components/admin/BookingList"
+import { FeedbackList } from "../components/admin/FeedbackList"
+import { FeedbackReportList } from "../components/admin/FeedbackReportList"
 
 const router = createBrowserRouter([
   {path:"/", element:<Login />},
@@ -24,10 +30,10 @@ const router = createBrowserRouter([
 
   {path:"/seeker", element: <SeekerHomePage/>,
     children: [
+      {path:"home", element:<Home/>},
       {path:"bookings", element:<Bookings/>},
       {path:"feedback", element:<Feedbacks/>},
       {path:"help", element:<Help/>},
-      {path:"propertyList", element:<PropertyList/>},
       {path:"wishList", element:<Wishlist/>},
       {path: "aboutUs", element: <AboutUs/>},
       {path:"reports", element:<Reports/>},
@@ -46,7 +52,13 @@ const router = createBrowserRouter([
   },
   {path:"/admin", element: <AdminHomePage/>, 
     children: [
-      {path:"allUserList", element: <AllUserList/>},
+      {path:'dashboard', element: <AdminDashboard/>},
+      {path:'users', element: <UserList/>},
+      {path:'properties', element: <PropertyList/>},
+      {path:'document-verification', element: <VerificationDocumentList/>},
+      {path:'bookings', element: <BookingList/>},
+      {path:'feedbacks', element: <FeedbackList/>},
+      {path:'feedback-reports', element: <FeedbackReportList/>}
     ]
   }
 

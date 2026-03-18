@@ -34,15 +34,19 @@ export const Login = () => {
       const res = await axios.post("/user/login",data)
       console.log(res)
       if(res.status == 200){
+        
+        localStorage.setItem('token',res.data.token)
+        localStorage.setItem('role',res.data.role)
+
         toast.success(res.data.message)
         const role = res.data.role
 
         switch(role){
-          case "seeker": navigate("/seeker")
+          case "SEEKER": navigate("/seeker")
           break;
-          case "owner": navigate("/owner") 
+          case "OWNER": navigate("/owner") 
           break;
-          case "admin": navigate("/admin")
+          case "ADMIN": navigate("/admin")
           break;
         }
       }

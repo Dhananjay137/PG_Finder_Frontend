@@ -6,7 +6,9 @@ export const AdminHomePage = () => {
   return (
     <div className='flex'>
       <AdminSidebar/>
-      <Outlet/>
+      <div className='m-3 border-2 w-full'>
+        <Outlet/>
+      </div>
     </div>
   )
 }
