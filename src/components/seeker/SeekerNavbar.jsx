@@ -72,7 +72,7 @@ export const SeekerNavbar = () => {
                   {tag.name}
                 </Link>
               )})}
-              <div className='text-gray-700 bg-gray-100 px-6 py-3 rounded-sm transition-all duration-200 cursor-pointer text-center hover:text-red-700 hover:bg-red-100 border border-transparent hover:border-red-200 transition-all duration-200'>
+              <div className='text-gray-700 bg-gray-100 px-6 py-3 rounded-sm transition-all duration-200 cursor-pointer text-center hover:text-red-700 hover:bg-red-100 border border-transparent hover:border-red-200 '>
                 <button>Log Out</button>
               </div>
             </div>}

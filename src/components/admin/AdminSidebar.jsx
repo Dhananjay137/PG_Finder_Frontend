@@ -4,7 +4,6 @@ import { Link, useLocation } from 'react-router-dom'
 
 export const AdminSidebar = () => {
   const [isOpen, setIsOpen] = useState(false)
-   const [activeSubMenu, setActiveSubMenu] = useState(null)
   const { pathname } = useLocation()
 
   const menuItems = [
@@ -19,11 +18,11 @@ export const AdminSidebar = () => {
   ]
 
   return (
-    <aside className={`min-h-screen flex flex-col border-r-2 space-y-1 p-3 transition-all duration-300 ${isOpen? 'w-64':'w-20'}`}>
+    <aside className={`min-h-screen flex flex-col border-r-2 border-gray-600 space-y-1 p-3 transition-all duration-300 ${isOpen? 'w-64':'w-20'}`}>
       {/* header */}
-      <div className='flex px-3 py-3 mb-2 gap-4 items-center text-blue-600 font-extrabold'>
+      <div className='flex px-3 py-3 mb-2 gap-4 items-center text-blue-600'>
         <Menu size={20} className='cursor-pointer shrink-0' onClick={() => {setIsOpen(!isOpen)}}/>
-        <span className={`text-md whitespace-nowrap overflow-hidden transition-all duration-300 ${isOpen? 'opacity-100':'opacity-0 w-0 overflow-hidden'}`}>PG FINDER</span>
+        <span className={`text-md font-semibold whitespace-nowrap overflow-hidden transition-all duration-300 ${isOpen? 'opacity-100':'opacity-0 w-0 overflow-hidden'}`}>PG FINDER</span>
       </div>
 
       {/* navigation */}
@@ -32,8 +31,8 @@ export const AdminSidebar = () => {
           const isActive = pathname === item.path
           return(
             <Link key={item.name} to={item.path} title={!isOpen? item.name :''}>
-              <div className={`flex text-md w-full items-center px-3 py-3 gap-4 transition-all duration-300 rounded-md ${isActive? 'text-blue-500 bg-blue-50':'text-gray-600 hover:bg-gray-100'}`}>
-              <div className='self-center'>{item.icon}</div>
+              <div className={`flex text-sm w-full items-center px-3 py-3 gap-4 transition-all duration-300 rounded-md ${isActive? 'text-blue-500 bg-blue-50':'text-gray-600 hover:bg-gray-100'}`}>
+                <div className='self-center'>{item.icon}</div>
                 <span className={`whitespace-nowrap ${isOpen? 'opacity-100':'opacity-0 w-0 overflow-hidden'}`}>{item.name}</span>
               </div>
             </Link>

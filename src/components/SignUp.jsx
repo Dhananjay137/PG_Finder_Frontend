@@ -60,8 +60,8 @@ export const SignUp = () => {
     }
   }
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
-      <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-3 lg-6">
+      <div className="bg-white p-6 lg:p-8 rounded-xl shadow-lg w-full max-w-2xl">
         <h2 className="text-2xl font-bold mb-6 text-gray-800">Create an Account</h2>
         
         <form onSubmit={handleSubmit(submitHandler)} className="space-y-4">

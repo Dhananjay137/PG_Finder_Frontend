@@ -57,8 +57,8 @@ export const Login = () => {
   }
 
   return (
-    <div className='min-h-screen bg-gray-100 flex items-center justify-center p-6'>
-      <div className='bg-white max-w-[550px] p-8 rounded-xl shadow-lg w-full max-w-2xl'>
+    <div className='min-h-screen bg-gray-100 flex items-center justify-center p-3 lg:p-6'>
+      <div className='bg-white max-w-[550px] p-6 lg:p-8 rounded-xl shadow-lg w-full max-w-2xl'>
         
         <header className='text-center mb-8'>
           <h2 className='text-3xl font-bold text-gray-800 mb-2'>Login</h2>
@@ -94,7 +94,7 @@ export const Login = () => {
           </div>
 
           <button 
-            className='w-full py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-md transition-colors mt-4' 
+            className='w-full p-2.5 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-md transition-colors mt-4' 
             type='submit'
           >
             Login
