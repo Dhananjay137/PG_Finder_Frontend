@@ -22,6 +22,7 @@ import { VerificationDocumentList } from "../components/admin/VerificationDocume
 import { BookingList } from "../components/admin/BookingList"
 import { FeedbackList } from "../components/admin/FeedbackList"
 import { FeedbackReportList } from "../components/admin/FeedbackReportList"
+import { FileCard } from "../components/utils/FileCard"
 
 const router = createBrowserRouter([
   {path:"/", element:<Login />},

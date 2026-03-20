@@ -42,7 +42,7 @@ export const AdminDashboard = () => {
         <StatCard title="Total Properties" value={data?.totalProperties} color="border-blue-500" />
         <StatCard title="Pending Approvals" value={data?.pendingProperties} color="border-yellow-500" subText="Needs action" />
         <StatCard title="Total Owners" value={data?.users.owners} color="border-purple-500" />
-        <StatCard title="Total Tenants" value={data?.users.tenants} color="border-green-500" />
+        <StatCard title="Total Tenants" value={data?.users.seekers} color="border-green-500" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import { STATUS_STYLES } from '../utils/statusStyles'
 
 export const BookingList = () => {
   const [bookings, setBookings] = useState([])
@@ -45,7 +46,11 @@ export const BookingList = () => {
               <td className='p-2'>₹ {booking.bookingAmount}</td>
               <td className="p-2">{new Date(booking.bookingDate).toLocaleString()}</td>
               <td className="p-2">{new Date(booking.expectedCheckInDate).toLocaleString()}</td>
-              <td className="p-2 font-bold">{booking.status}</td>
+              <td className="p-1">
+                <span className={`p-1 font-bold text-xs rounded-md ${STATUS_STYLES[booking.status] || STATUS_STYLES.DEFAULT}`}>
+                  {booking.status}
+                </span>
+              </td>
             </tr>
           ))}
         </tbody>
