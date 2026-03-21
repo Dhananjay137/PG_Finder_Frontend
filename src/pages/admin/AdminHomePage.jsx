@@ -4,9 +4,9 @@ import { Outlet } from 'react-router-dom'
 
 export const AdminHomePage = () => {
   return (
-    <div className='flex flex-row'>
+    <div className='flex h-screen overflow-hidden'>
       <AdminSidebar/>
-      <div className='w-full overflow-x-auto'>
+      <div className='w-full flex-1 overflow-y-auto overflow-x-auto'>
         <Outlet/>
       </div>
     </div>

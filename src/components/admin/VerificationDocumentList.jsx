@@ -42,7 +42,7 @@ export const VerificationDocumentList = () => {
       }
     } catch (err) {
       console.log(err);
-      toast.error("error while updating status");
+      toast.error(err?.message);
     }
   };
   const getAllDocument = async () => {
@@ -55,7 +55,7 @@ export const VerificationDocumentList = () => {
       }
     } catch (err) {
       console.log(err);
-      toast.error("error while fetching");
+      toast.error(err?.message);
     }
   };
   return (

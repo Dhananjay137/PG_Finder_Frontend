@@ -33,7 +33,7 @@ export const UserList = () => {
 
     } catch(err) {
       console.log(err)
-      toast.error('error while deleting')
+      toast.error(err?.message)
     }
   }
 
@@ -52,7 +52,7 @@ export const UserList = () => {
       
     } catch(err) {
       console.log(err)
-      toast.error('error while updating')
+      toast.error(err?.message)
     }
   }
 
@@ -65,8 +65,8 @@ export const UserList = () => {
         toast.success(res?.data?.message);
       }
     } catch (err) {
-      console.log(err?.response?.data?.message)
-      toast.error("error while fetch");
+      console.log(err)
+      toast.error(err?.message);
     }
   };
 

@@ -22,7 +22,9 @@ import { VerificationDocumentList } from "../components/admin/VerificationDocume
 import { BookingList } from "../components/admin/BookingList"
 import { FeedbackList } from "../components/admin/FeedbackList"
 import { FeedbackReportList } from "../components/admin/FeedbackReportList"
-import { FileCard } from "../components/utils/FileCard"
+import { Properties } from "../components/owner/Properties"
+import { OwnerBookings } from "../components/owner/OwnerBookings"
+import { OwnerDashboard } from "../components/owner/OwnerDashboard"
 
 const router = createBrowserRouter([
   {path:"/", element:<Login />},
@@ -45,10 +47,13 @@ const router = createBrowserRouter([
   },
   {path:"/owner", element: <OwnerHomePage/>,
     children:[
-      {path:"aboutUs", element:<AboutUs/>},
+      {path:"dashboard", element:<OwnerDashboard/>},
+      // {path:"aboutUs", element:<AboutUs/>},
       {path:"profile", element:<Profile/>},
-      {path:"reports", element:<Reports/>},
-      {path:"addProperty", element:<AddProperty/>}
+      {path:"feedback-reports", element:<Reports/>},
+      {path:"add-property", element:<AddProperty/>},
+      {path:"properties/:status",element:<Properties/>},
+      {path:"bookings/:status",element:<OwnerBookings/>}
     ]
   },
   {path:"/admin", element: <AdminHomePage/>, 

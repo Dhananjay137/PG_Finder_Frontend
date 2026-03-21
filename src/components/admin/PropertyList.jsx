@@ -38,7 +38,7 @@ export const PropertyList = () => {
 
     } catch(err) {
       console.log(err)
-      toast.error('error while update')
+      toast.error(err?.message)
     }
   };
 
@@ -51,8 +51,8 @@ export const PropertyList = () => {
         setProperties(res?.data?.data);
       }
     } catch (err) {
-      console.log(err?.response);
-      toast.error("error while fetching data");
+      console.log(err);
+      toast.error(err?.message);
     }
   };
   return (

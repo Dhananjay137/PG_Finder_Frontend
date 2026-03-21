@@ -5,7 +5,7 @@ import { STATUS_STYLES } from '../utils/statusStyles'
 
 export const BookingList = () => {
   const [bookings, setBookings] = useState([])
-  const tableHeaders = ["Sr.","User ID","Property ID","PG Room ID","Amount","Booking Date|Time","Check In Date","Status"]
+  const tableHeaders = ["Sr.","Seeker ID","Owner ID","Property ID","PG Room ID","Amount","Booking Date|Time","Check In Date","Status"]
   
   useEffect(() => {
     getAllBooking()
@@ -21,7 +21,7 @@ export const BookingList = () => {
 
     } catch(err) {
       console.log(err)
-      toast.error('error while fetching')
+      toast.error(err?.message)
     }
   }
   return (
@@ -40,7 +40,8 @@ export const BookingList = () => {
           {bookings.map((booking, i) => (
             <tr key={booking._id} className={`text-center text-sm ${i%2 == 0 ? 'bg-gray-50':'bg-white'} hover:bg-gray-100`}>
               <td className='p-2'>{i+1}</td>
-              <td className="p-2">{booking.userID}</td>
+              <td className="p-2">{booking.seekerID}</td>
+              <td className='p-2'>{booking.ownerID}</td>
               <td className="p-2">{booking.propertyID}</td>
               <td className="p-2">{booking.pgRoomPricingID}</td>
               <td className='p-2'>₹ {booking.bookingAmount}</td>

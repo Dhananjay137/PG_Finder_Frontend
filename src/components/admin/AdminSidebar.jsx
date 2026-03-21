@@ -1,4 +1,4 @@
-import { CircleChevronRight, Frame, Users, LayoutDashboard, Settings, LogOut, ChevronRight, Building2, MessageCircle, FileText, Menu, ChevronUp } from 'lucide-react'
+import { CircleChevronRight, Frame, Users, LayoutDashboard, Settings, LogOut, Building2, MessageCircle, FileText, Menu } from 'lucide-react'
 import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
@@ -18,11 +18,11 @@ export const AdminSidebar = () => {
   ]
 
   return (
-    <aside className={`min-h-screen flex flex-col border-r-2 border-gray-600 space-y-1 p-3 transition-all duration-300 ${isOpen? 'w-64':'w-20'}`}>
+    <aside className={`min-h-screen flex flex-col border-r-2 border-gray-100 space-y-1 p-3 transition-all duration-300 ${isOpen? 'w-64':'w-20'}`}>
       {/* header */}
       <div className='flex px-3 py-3 mb-2 gap-4 items-center text-blue-600'>
         <Menu size={20} className='cursor-pointer shrink-0' onClick={() => {setIsOpen(!isOpen)}}/>
-        <span className={`text-md font-semibold whitespace-nowrap overflow-hidden transition-all duration-300 ${isOpen? 'opacity-100':'opacity-0 w-0 overflow-hidden'}`}>PG FINDER</span>
+        <span className={`text-md font-bold whitespace-nowrap overflow-hidden transition-all duration-300 ${isOpen? 'opacity-100':'opacity-0 w-0 overflow-hidden'}`}>PG FINDER</span>
       </div>
 
       {/* navigation */}
@@ -31,7 +31,7 @@ export const AdminSidebar = () => {
           const isActive = pathname === item.path
           return(
             <Link key={item.name} to={item.path} title={!isOpen? item.name :''}>
-              <div className={`flex text-sm w-full items-center px-3 py-3 gap-4 transition-all duration-300 rounded-md ${isActive? 'text-blue-500 bg-blue-50':'text-gray-600 hover:bg-gray-100'}`}>
+              <div className={`flex text-sm w-full items-center px-3 py-3 gap-4 transition-all duration-300 rounded-md ${isActive? 'text-blue-600 bg-blue-50':'text-gray-600 hover:bg-gray-100'}`}>
                 <div className='self-center'>{item.icon}</div>
                 <span className={`whitespace-nowrap ${isOpen? 'opacity-100':'opacity-0 w-0 overflow-hidden'}`}>{item.name}</span>
               </div>
@@ -43,7 +43,7 @@ export const AdminSidebar = () => {
       <div className='border-t'>
         <button className='flex w-full items-center px-3 py-3 gap-4 text-gray-600 hover:bg-red-50 hover:text-red-600 rounded-lg transition-colors'>
           <LogOut size={20} className='shrink-0' />
-          <span className={`font-medium transition-all duration-300 whitespace-nowrap ${!isOpen ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
+          <span className={`font-medium text-sm transition-all duration-300 whitespace-nowrap ${!isOpen ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
             Log Out
           </span>
         </button>
