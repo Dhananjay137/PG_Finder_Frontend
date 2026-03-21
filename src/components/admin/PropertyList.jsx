@@ -80,7 +80,7 @@ export const PropertyList = () => {
                 <td className="p-2">{i + 1}</td>
                 <td className="p-2">{property.propertyName}</td>
                 <td className="p-2">{property.city}</td>
-                <td className="p-2">{property.gallery?.length || 0} images</td>
+                <td className="p-2">{property.gallery?.length || 0} {property.gallery?.length >1 ? 'images':'image'}</td>
                 <td className="p-2">{property.houseNo}</td>
                 <td className="p-2">{property.ownerId}</td>
                 <td className="p-2">{property.propertyContact}</td>
@@ -99,7 +99,7 @@ export const PropertyList = () => {
                   <button
                     className="p-2 bg-blue-500 rounded-md hover:bg-blue-700"
                     onClick={() => updateStatus(property._id, "APPROVED")}
-                    disabled={ property.status == "APPROVED" ? true: false}
+                    disabled={ property.isVerified}
                   >
                     Approve
                   </button>
@@ -108,6 +108,12 @@ export const PropertyList = () => {
                     onClick={() => updateStatus(property._id, "REJECTED")}
                   >
                     Reject
+                  </button>
+                  <button
+                    className="p-2 bg-gray-500 hover:bg-gray-700 rounded-md"
+                    onClick={() => updateStatus(property._id, property.status == 'BLOCKED' ? 'PENDING': 'BLOCKED')}
+                  >
+                    {property.status == 'BLOCKED' ? 'Unblock': 'Block'}
                   </button>
                 </td>
               </tr>
