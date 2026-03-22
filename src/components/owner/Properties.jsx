@@ -1,10 +1,12 @@
 import axios from 'axios'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { Property } from './Property'
 
 export const Properties = () => {
   const { status } = useParams()
+  const [properties, setProperties] = useState()
 
   useEffect(() => {
     getAllProperties()
@@ -18,7 +20,10 @@ export const Properties = () => {
           status: status
         }
       })
-      console.log(res)
+      console.log(res.data.data)
+      if(res?.status == 200){
+        setProperties(res?.data?.data)
+      }
 
     } catch(err){
       console.log(err)
@@ -26,6 +31,23 @@ export const Properties = () => {
     }
   }
   return (
-    <div>Properties: {status}</div>
+    /* grid-cols-1 for mobile, md:grid-cols-2 for tablets, lg:grid-cols-3 for desktop */
+<div className='p-4'>
+  <h2 className='text-lg font-bold mb-4 uppercase'>{status} Properties</h2>
+  
+  <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+    {properties?.map((property) => (
+      <Property key={property._id} property={property} />
+    ))}
+  </div>
+
+  {/* Optional: Empty State */}
+  {properties?.length === 0 && (
+    <div className="text-center py-20 text-gray-500">
+      No properties found with status: {status}
+    </div>
+  )}
+</div>
+
   )
 }

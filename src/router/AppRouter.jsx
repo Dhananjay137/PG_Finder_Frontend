@@ -25,7 +25,9 @@ import { FeedbackReportList } from "../components/admin/FeedbackReportList"
 import { Properties } from "../components/owner/Properties"
 import { OwnerBookings } from "../components/owner/OwnerBookings"
 import { OwnerDashboard } from "../components/owner/OwnerDashboard"
-
+import { PGDetailForm } from "../components/owner/PGDetailForm"
+import { FlatDetailForm } from "../components/owner/FlatDetailForm"
+ 
 const router = createBrowserRouter([
   {path:"/", element:<Login />},
   {path:"/signUp", element: <SignUp/>},
@@ -53,7 +55,11 @@ const router = createBrowserRouter([
       {path:"feedback-reports", element:<Reports/>},
       {path:"add-property", element:<AddProperty/>},
       {path:"properties/:status",element:<Properties/>},
-      {path:"bookings/:status",element:<OwnerBookings/>}
+      {path:"bookings/:status",element:<OwnerBookings/>},
+      {path:"add-details/pg/:id",element:<PGDetailForm/>},
+      {path:"add-details/flat/:id",element:<FlatDetailForm/>},
+      {path:"detail/pg/:id", element: <PGDetails/>}
+
     ]
   },
   {path:"/admin", element: <AdminHomePage/>, 

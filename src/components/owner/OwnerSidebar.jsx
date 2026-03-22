@@ -61,6 +61,7 @@ export const OwnerSidebar = () => {
                 /* Submenu Trigger */
                 <div 
                   onClick={() => toggleSubMenu(item.name)}
+                  title={!isOpen ? item.name : ''}
                   className={`flex text-sm w-full items-center px-3 py-3 gap-4 transition-all duration-300 rounded-md cursor-pointer text-gray-600 hover:bg-gray-100`}
                 >
                   <div className='self-center shrink-0'>{item.icon}</div>
