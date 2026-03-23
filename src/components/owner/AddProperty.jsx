@@ -1,8 +1,8 @@
-import axios from 'axios'
 import { Calendar, Info } from 'lucide-react'
 import React from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
+import api from '../../api/axiosInstance'
 
 export const AddProperty = () => {
   const { register, handleSubmit,control, formState: { errors }} = useForm({
@@ -73,7 +73,7 @@ export const AddProperty = () => {
 
   try {
     // IMPORTANT: Use multipart/form-data for files
-    const res = await axios.post('/property/property', formData, {
+    const res = await api.post('/property/property', formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
 

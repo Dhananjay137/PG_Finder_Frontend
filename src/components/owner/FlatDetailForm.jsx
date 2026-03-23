@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { BadgeIndianRupee, Info, LayoutList, Settings2, Watch } from 'lucide-react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import api from '../../api/axiosInstance';
 
 export const FlatDetailForm = () => {
   const { id } = useParams()
@@ -15,7 +16,7 @@ export const FlatDetailForm = () => {
   const submitHandler = async(data) => {
     console.log(data)
     try {
-      const res = await axios.post('/flat/flat',{...data, propertyId: id})
+      const res = await api.post('/flat/flat',{...data, propertyId: id})
 
       if(res?.status == 201){
         toast.success(res?.data?.message)
@@ -138,7 +139,8 @@ export const FlatDetailForm = () => {
 
             <div>
               <label className='block text-sm font-medium'>Maintenance Amount</label>
-              <input type='number' {...register('maintenanceAmount')} className='border border-gray-300 w-full rounded-md p-2 mt-1 outline-blue-500' />
+              <input type='number' {...register('maintenanceAmount',{ required: 'maintenance amount is required' })} className='border border-gray-300 w-full rounded-md p-2 mt-1 outline-blue-500' />
+              {errors.maintenanceAmount && <p className='text-red-500 text-sm mt-1'>{errors.maintenanceAmount.message}</p>}
             </div>
             <div className='w-full rounded-md '>
               <label className='block text-sm font-medium'>Rent Negotiable</label>
@@ -245,7 +247,8 @@ export const FlatDetailForm = () => {
 
           <section>
             <label className='block text-sm font-medium'>Description</label>
-            <textarea {...register('description')} className='border border-gray-300 w-full rounded-md p-2 mt-1 outline-blue-500'></textarea>
+            <textarea {...register('description',{ required: 'description is required' })} className='border border-gray-300 w-full rounded-md p-2 mt-1 outline-blue-500'></textarea>
+            {errors.description && <p className='text-red-500 text-sm mt-1'>{errors.description.message}</p>}
           </section>
         </div>
 

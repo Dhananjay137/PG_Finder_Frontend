@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MapPin, Phone, Mail, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export const Property = ({ property }) => {
+  let type = ''
+  const [role, setRole] = useState('')
   const {
     _id,
     propertyName,
@@ -19,6 +21,10 @@ export const Property = ({ property }) => {
   } = property;
   const navigate = useNavigate()
 
+  useEffect(() => {
+    setRole(localStorage.getItem('role'))
+  },[role])
+
   // Use the first image from gallery as cover
   const coverImage = gallery?.[0]?.fileUrl || "https://via.placeholder.com";
 
@@ -28,6 +34,16 @@ export const Property = ({ property }) => {
     }
     if(type === 'FLAT'){
       navigate(`/owner/add-details/flat/${id}`)
+    }
+  }
+
+  //daynamicaly add role
+  const handleViewNavigate =( id, type ) => {
+    if(type === 'PG'){
+      navigate(`/${role.toLowerCase()}/detail/pg/${_id}`)
+    }
+    if(type === 'FLAT'){
+      navigate(`/${role.toLowerCase()}/detail/flat/${_id}`)
     }
   }
 
@@ -93,7 +109,7 @@ export const Property = ({ property }) => {
           <div className="flex flex-col gap-2 mt-4 mb-2">
             
             {/* Standard for all Pending Properties */}
-            {status === 'PENDING' && (
+            {type=='OWNER' && status === 'PENDING' && (
               <button 
             onClick={() => handleNavigate(_id, propertyType)}
             className="w-full bg-amber-600 hover:bg-amber-700 text-white text-[11px] font-bold py-2.5 rounded-lg transition-colors tracking-wider">
@@ -103,14 +119,16 @@ export const Property = ({ property }) => {
             
 
             {/* Only for APPROVED PGs */}
-            {status === 'APPROVED' && propertyType === 'PG' && (
-              <button className="w-full bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 text-[11px] font-bold py-2.5 rounded-lg transition-colors tracking-wider uppercase">
+            {type=='OWNER' && status === 'APPROVED' && propertyType === 'PG' && (
+              <button 
+              onClick={() => navigate(`/owner/add-room/pg/${_id}`)}
+              className="w-full bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 text-[11px] font-bold py-2.5 rounded-lg transition-colors tracking-wider uppercase">
                 + Add Room
               </button>
             )}
 
             {status == 'APPROVED' && <button 
-            onClick={() => {navigate(`/owner/detail/pg/${_id}`)}}
+            onClick={() => handleViewNavigate(_id, propertyType)}
             className="w-full bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 text-[11px] font-bold py-2.5 rounded-lg transition-colors tracking-wider uppercase">
               View Detils
             </button>}

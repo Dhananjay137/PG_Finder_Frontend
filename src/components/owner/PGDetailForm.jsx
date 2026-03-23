@@ -1,9 +1,9 @@
-import axios from 'axios'
 import { Info, LayoutList } from 'lucide-react'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import api from '../../api/axiosInstance'
 
 export const PGDetailForm = () => {
   const { id } = useParams()
@@ -13,7 +13,7 @@ export const PGDetailForm = () => {
   const amenities = ["LAUNDRY", "RO_WATER", "ROOM_CLEANING", "KITCHEN_ACCESS", "POWER_BACKUP", "LIFT", "WIFI", "WATER_COOLER", "FRIDGE", "MICROWAVE", "FIRST_AID", "WARDEN", "SECURITY_GUARD", "CCTV", "GYM"]
   const submitHandler = async(data) => {
     try{
-      const res = await axios.post('/pg/pg',{...data, propertyId: id})
+      const res = await api.post('/pg/pg',{...data, propertyId: id})
 
       if(res?.status == 201){
         toast.success(res?.data?.message)
@@ -32,11 +32,13 @@ export const PGDetailForm = () => {
         <div className='border-0 border-gray-300 rounded-md p-3 space-y-3'>
 
           <div className='flex space-x-1 items-center border p-2 mb-3 mt-5 border-gray-300 rounded-md bg-gray-200 text-gray-700'>
-              <h3 className='font-medium'>Basic Details</h3>
+            <Info size={16} />
+            <h3 className='font-medium'>Basic Details</h3>
           </div>
           <section>
             <label className='block text-sm font-medium'>Description</label>
-            <textarea {...register('description')} className='border border-gray-300 w-full rounded-md p-2 mt-1 outline-blue-500'></textarea>
+            <textarea {...register('description',{ required: 'description is required '})} className='border border-gray-300 w-full rounded-md p-2 mt-1 outline-blue-500'></textarea>
+            {errors.description && <p className='text-red-500 text-sm mt-1'>{errors.description.message}</p>}
           </section>
           <section className=' grid grid-cols-3 gap-4 border-0'>
 
@@ -52,9 +54,14 @@ export const PGDetailForm = () => {
             </div>
 
             <div>
-              <label className='block text-sm font-medium'>Available From</label>
-              <input type='date' {...register('availableFrom', { required: 'Available from is required' })} className='border border-gray-300 w-full rounded-md p-2 mt-1 outline-blue-500' />
-              {errors.availableFrom && <p className='text-red-500 text-sm mt-1'>{errors.availableFrom.message}</p>}
+              <label className='block text-sm font-medium'>Preferred Guest</label>
+              <select {...register('preferredGuest', { required: 'preferred guest is required' })} className='border border-gray-300 w-full rounded-md p-2 mt-1'>
+                <option value="">Select</option>
+                <option value="STUDENT">Student</option>
+                <option value="WORKING">Working</option>
+                <option value="BOTH">Both</option>
+              </select>
+              {errors.preferredGuest && <p className='text-red-500 text-sm mt-1'>{errors.preferredGuest.message}</p>}
             </div>
 
             <div>
@@ -73,17 +80,6 @@ export const PGDetailForm = () => {
               <label className='block text-sm font-medium'>Rent Lock In Month</label>
               <input type='number' {...register('rentLockInMonth', { required: 'Rent Lock In Month is required' })} className='border border-gray-300 w-full rounded-md p-2 mt-1 outline-blue-500' />
               {errors.rentLockInMonth && <p className='text-red-500 text-sm mt-1'>{errors.rentLockInMonth.message}</p>}
-            </div>
-
-            <div>
-              <label className='block text-sm font-medium'>Preferred Guest</label>
-              <select {...register('preferredGuest', { required: 'feild is required' })} className='border border-gray-300 w-full rounded-md p-2 mt-1'>
-                <option value="">Select</option>
-                <option value="STUDENT">Student</option>
-                <option value="WORKING">Working</option>
-                <option value="BOTH">Both</option>
-              </select>
-              {errors.preferredGuest && <p className='text-red-500 text-sm mt-1'>{errors.preferredGuest.message}</p>}
             </div>
 
             <div>

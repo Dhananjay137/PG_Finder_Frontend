@@ -8,18 +8,13 @@ import { getUser } from '../utils/getUser'
 export const SeekerNavbar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const [isProfileOpen, setIsProfileOpen] = useState(false)
-
-  const [ userId, setUserId ] = useState('69b3a9c5dedfbdfd03c51f89')
+  const [token, setToken] = useState('')
   const [ userFirstName, setUserFirstName ] = useState('')
 
   useEffect(()=> {
-    const fetch = async() => {
-      let data = await getUser(userId)
-      //console.log(data)
-      setUserFirstName(data.firstName)
-    }
-    fetch()
-  },[userId])
+    setToken(localStorage.getItem('token'))
+    setUserFirstName(localStorage.getItem('firstName'))
+  },[])
 
   
 

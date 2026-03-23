@@ -21,7 +21,9 @@ export const Profile = () => {
   if (!userData) return <div className="p-4 animate-pulse bg-white/20 rounded-2xl w-72 h-80"></div>;
 
   return (
-    <div className="max-w-full p-6 rounded-md bg-white/30 backdrop-blur-2xl border border-white/40 ring-1 ring-black/5 text-gray-800">
+    
+    <div className='bg-gray-50 h-screen flex items-center justify-center'>
+    <div className="md:w-2xl w-full  p-6 rounded-md bg-white/80 backdrop-blur-2xl border border-white/40 ring-1 ring-black/5 text-gray-800">
       
       {/* Header */}
       <div className="flex flex-col items-center text-center mb-6">
@@ -59,6 +61,7 @@ export const Profile = () => {
         </svg>
         Update Profile
       </button>
+    </div>
     </div>
   );
 };

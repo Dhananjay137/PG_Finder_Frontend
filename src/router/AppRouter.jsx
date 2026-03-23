@@ -27,13 +27,20 @@ import { OwnerBookings } from "../components/owner/OwnerBookings"
 import { OwnerDashboard } from "../components/owner/OwnerDashboard"
 import { PGDetailForm } from "../components/owner/PGDetailForm"
 import { FlatDetailForm } from "../components/owner/FlatDetailForm"
+import { AddRoomForm } from "../components/owner/AddRoomForm"
+import { ViewUser } from "../components/utils/ViewUser"
+import ProtectedRoutes from "../components/ProtectedRoutes"
  
 const router = createBrowserRouter([
   {path:"/", element:<Login />},
   {path:"/signUp", element: <SignUp/>},
   {path: "/aboutUs", element: <AboutUs/>},
 
-  {path:"/seeker", element: <SeekerHomePage/>,
+  {path:"/seeker", element: 
+    <ProtectedRoutes userRoles={['SEEKER']}>
+      <SeekerHomePage/>
+    </ProtectedRoutes>
+    ,
     children: [
       {path:"home", element:<Home/>},
       {path:"bookings", element:<Bookings/>},
@@ -43,11 +50,15 @@ const router = createBrowserRouter([
       {path: "aboutUs", element: <AboutUs/>},
       {path:"reports", element:<Reports/>},
       {path:"profile", element:<Profile/>},
-      {path:"pgDetails/:propertyId", element:<PGDetails/>},
-      {path:"flatDetails/:propertyID", element:<FlatDetails/>}
+      {path:"detail/pg/:id", element:<PGDetails/>},
+      {path:"detail/flat/:id", element:<FlatDetails/>}
     ]
   },
-  {path:"/owner", element: <OwnerHomePage/>,
+  {path:"/owner", element: 
+    <ProtectedRoutes userRoles={['OWNER']}>
+      <OwnerHomePage/>
+    </ProtectedRoutes>
+  ,
     children:[
       {path:"dashboard", element:<OwnerDashboard/>},
       // {path:"aboutUs", element:<AboutUs/>},
@@ -58,11 +69,18 @@ const router = createBrowserRouter([
       {path:"bookings/:status",element:<OwnerBookings/>},
       {path:"add-details/pg/:id",element:<PGDetailForm/>},
       {path:"add-details/flat/:id",element:<FlatDetailForm/>},
-      {path:"detail/pg/:id", element: <PGDetails/>}
+      {path:"detail/pg/:id", element: <PGDetails/>},
+      {path:"detail/flat/:id",element:<FlatDetails/>},
+      {path:"add-room/pg/:id", element: <AddRoomForm/>},
+      {path:"view-user/:id", element: <ViewUser/>}
 
     ]
   },
-  {path:"/admin", element: <AdminHomePage/>, 
+  {path:"/admin", element: 
+    <ProtectedRoutes userRoles={['ADMIN']}>
+      <AdminHomePage/>
+    </ProtectedRoutes>
+  , 
     children: [
       {path:'dashboard', element: <AdminDashboard/>},
       {path:'users', element: <UserList/>},

@@ -31,15 +31,17 @@ export const Login = () => {
     // navigate("/seeker")
     
     try{
-      const res = await axios.post("/user/login",data)
+      const res = await axios.post("http://localhost:3000/user/login",data)
       console.log(res)
       if(res.status == 200){
         
-        localStorage.setItem('token',res.data.token)
-        localStorage.setItem('role',res.data.role)
+        localStorage.setItem('token',res?.data?.token)
+        localStorage.setItem('role',res?.data?.role)
+        localStorage.setItem('firstName',res?.data?.firstName)
+        localStorage.setItem('lastName',res?.data?.lastName)
 
-        toast.success(res.data.message)
-        const role = res.data.role
+        toast.success(res?.data?.message)
+        const role = res?.data?.role
 
         switch(role){
           case "SEEKER": navigate("/seeker")

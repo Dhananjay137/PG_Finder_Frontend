@@ -1,8 +1,8 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Property } from './Property'
+import api from '../../api/axiosInstance'
 
 export const Properties = () => {
   const { status } = useParams()
@@ -14,14 +14,14 @@ export const Properties = () => {
 
   const getAllProperties = async() => {
     try{
-      const res = await axios.get(`/property/properties`,{
+      const res = await api.get(`/property/properties`,{
         params: {
-          ownerId:'69b3a9c5dedfbdfd03c51f89',
           status: status
         }
       })
       console.log(res.data.data)
       if(res?.status == 200){
+        toast.success(res?.data?.message)
         setProperties(res?.data?.data)
       }
 
