@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { FileCard } from "../utils/FileCard";
 import { STATUS_STYLES } from "../utils/statusStyles";
+import api from "../../api/axiosInstance";
 
 export const VerificationDocumentList = () => {
   const [documents, setDocuments] = useState([]);
@@ -31,7 +32,7 @@ export const VerificationDocumentList = () => {
   };
   const updateStatus = async (id, status) => {
     try {
-      const res = await axios.put(
+      const res = await api.put(
         `/bookingDocument/bookingDocument/${id}`,
         {verificationStatus: status}
       );
@@ -47,7 +48,7 @@ export const VerificationDocumentList = () => {
   };
   const getAllDocument = async () => {
     try {
-      const res = await axios.get("/bookingDocument/bookingDocuments");
+      const res = await api.get("/bookingDocument/bookingDocuments");
       //console.log(res)
       if (res?.status == 200) {
         toast.success(res?.data?.message);
@@ -121,6 +122,7 @@ export const VerificationDocumentList = () => {
                   <button
                     className="p-2 bg-red-500 hover:bg-red-700 rounded-md"
                     onClick={() => updateStatus(document._id, "REJECTED")}
+                    disabled={document.verificationStatus == 'REJECTED'? true : false}
                   >
                     Reject
                   </button>

@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { STATUS_STYLES } from '../utils/statusStyles'
+import api from '../../api/axiosInstance'
 
 export const BookingList = () => {
   const [bookings, setBookings] = useState([])
@@ -12,7 +13,7 @@ export const BookingList = () => {
   },[])
   const getAllBooking = async() => {
     try{
-      const res = await axios.get('/booking/bookings')
+      const res = await api.get('/booking/bookings')
       if(res?.status == 200){
         toast.success(res?.data?.message)
         setBookings(res?.data?.data)

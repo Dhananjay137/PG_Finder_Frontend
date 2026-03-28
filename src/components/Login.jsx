@@ -34,11 +34,15 @@ export const Login = () => {
       const res = await axios.post("http://localhost:3000/user/login",data)
       console.log(res)
       if(res.status == 200){
+
+        const user = {
+          token: res?.data?.token,
+          role: res?.data?.role,
+          firstName: res?.data?.firstName,
+          lastName: res?.data?.lastName
+        }
         
-        localStorage.setItem('token',res?.data?.token)
-        localStorage.setItem('role',res?.data?.role)
-        localStorage.setItem('firstName',res?.data?.firstName)
-        localStorage.setItem('lastName',res?.data?.lastName)
+        localStorage.setItem('user',JSON.stringify(user))
 
         toast.success(res?.data?.message)
         const role = res?.data?.role

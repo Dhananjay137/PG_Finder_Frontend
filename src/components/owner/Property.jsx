@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const Property = ({ property }) => {
   let type = ''
-  const [role, setRole] = useState('')
+  const [user, setUser] = useState(null)
   const {
     _id,
     propertyName,
@@ -22,8 +22,8 @@ export const Property = ({ property }) => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    setRole(localStorage.getItem('role'))
-  },[role])
+    setUser(JSON.parse(localStorage.getItem('user')))
+  },[])
 
   // Use the first image from gallery as cover
   const coverImage = gallery?.[0]?.fileUrl || "https://via.placeholder.com";
@@ -39,11 +39,13 @@ export const Property = ({ property }) => {
 
   //daynamicaly add role
   const handleViewNavigate =( id, type ) => {
+    const role = user?.role?.toLowerCase();
+    console.log(role)
     if(type === 'PG'){
-      navigate(`/${role.toLowerCase()}/detail/pg/${_id}`)
+      navigate(`/${role}/detail/pg/${_id}`)
     }
     if(type === 'FLAT'){
-      navigate(`/${role.toLowerCase()}/detail/flat/${_id}`)
+      navigate(`/${role}/detail/flat/${_id}`)
     }
   }
 

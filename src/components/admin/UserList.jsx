@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { FileCard } from "../utils/FileCard";
 import { STATUS_STYLES } from "../utils/statusStyles";
+import api from "../../api/axiosInstance";
 
 export const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -25,7 +26,7 @@ export const UserList = () => {
 
   const deleteUser = async(id) => {
     try{
-      const res = await axios.delete(`/user/user/${id}`)
+      const res = await api.delete(`/user/user/${id}`)
       if(res?.status == 200){
         toast.success(res?.data?.message)
         getAllUsers()
@@ -43,7 +44,7 @@ export const UserList = () => {
       formData.append('status',status)
       console.log([...formData])
 
-      const res = await axios.put(`user/user/${id}`,formData)
+      const res = await api.put(`user/user/${id}`,formData)
 
       if(res?.status == 200){
         toast.success(res?.data?.message)
@@ -58,7 +59,7 @@ export const UserList = () => {
 
   const getAllUsers = async () => {
     try {
-      const res = await axios.get("/user/users");
+      const res = await api.get("/user/users");
       //console.log(res?.data?.data)
       if (res.status == 200) {
         setUsers(res?.data?.data);

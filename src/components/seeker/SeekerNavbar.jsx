@@ -2,18 +2,20 @@ import axios from 'axios'
 import { BookmarkCheck, ChevronDown, Heart, HelpCircle, House, Info, LogOut, Menu, MessageSquare, MessageSquareWarning, User, XLineTop } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { toast } from 'react-toastify'
-import { getUser } from '../utils/getUser'
+import { useLogout } from '../../hooks/useLogout'
 
 export const SeekerNavbar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const [isProfileOpen, setIsProfileOpen] = useState(false)
-  const [token, setToken] = useState('')
-  const [ userFirstName, setUserFirstName ] = useState('')
+  // const [token, setToken] = useState('')
+  // const [ userFirstName, setUserFirstName ] = useState('')
+  const [user, setUser] = useState(null)
+  const logOut = useLogout()
 
   useEffect(()=> {
-    setToken(localStorage.getItem('token'))
-    setUserFirstName(localStorage.getItem('firstName'))
+    setUser(JSON.parse(localStorage.getItem('user')))
+    // setToken(localStorage.getItem('token'))
+    // setUserFirstName(localStorage.getItem('firstName'))
   },[])
 
   
@@ -55,7 +57,7 @@ export const SeekerNavbar = () => {
           <div className='relative'>
             <button className='flex items-center gap-2 bg-gray-50 p-1 rounded-full text-sm' onClick={() => setIsProfileOpen(!isProfileOpen)}>
               <div className='flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 border border-blue-200 text-blue-700 font-medium'>
-              {(userFirstName?.at(0))?.toUpperCase() || '@'}
+              {(user?.firstName?.at(0))?.toUpperCase() || '@'}
               </div>
               <ChevronDown size={18} className={`text-gray-500 transition-transform duration-300 ${isProfileOpen? 'rotate-180':''}`}/>
             </button>
@@ -67,7 +69,10 @@ export const SeekerNavbar = () => {
                   {tag.name}
                 </Link>
               )})}
-              <div className='text-gray-700 bg-gray-100 px-6 py-3 rounded-sm transition-all duration-200 cursor-pointer text-center hover:text-red-700 hover:bg-red-100 border border-transparent hover:border-red-200 '>
+              <div 
+              className='text-gray-700 bg-gray-100 px-6 py-3 rounded-sm transition-all duration-200 cursor-pointer text-center hover:text-red-700 hover:bg-red-100 border border-transparent hover:border-red-200 '
+              onClick={() => logOut()}
+              >
                 <button>Log Out</button>
               </div>
             </div>}
@@ -105,8 +110,11 @@ export const SeekerNavbar = () => {
           </div>
         </div>
 
-        <div className='m-2 bg-gray-50 active:bg-red-50 active:text-red-700 transition-all duration-200'>
-          <Link to='#' className='flex items-center gap-4 px-6 py-3 text-sm w-auto'><LogOut size={16}/>Log Out</Link>
+        <div 
+        className='m-2 bg-gray-50 active:bg-red-50 active:text-red-700 transition-all duration-200'
+        onClick={() => logOut()}
+        >
+          <div className='flex items-center gap-4 px-6 py-3 text-sm w-auto'><LogOut size={16}/>Log Out</div>
         </div>
 
       </div>}

@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import { Delete, Edit, Trash } from "lucide-react";
 import { STATUS_STYLES } from "../utils/statusStyles";
+import api from "../../api/axiosInstance";
 
 export const PropertyList = () => {
   const tableHeaders = [
@@ -29,7 +30,7 @@ export const PropertyList = () => {
 
   const updateStatus = async (id, status) => {
     try {
-      const res = await axios.put(`/property/property/${id}`,{status: status})
+      const res = await api.put(`/property/property/${id}`,{status: status})
 
       if (res?.status == 201) {
         toast.success(res.data.message);
@@ -44,7 +45,7 @@ export const PropertyList = () => {
 
   const getAllPropertyies = async () => {
     try {
-      const res = await axios.get("/property/properties");
+      const res = await api.get("/property/properties");
       //console.log(res?.data?.data)
       if (res.status == 200) {
         toast.success(res?.data?.message);
@@ -99,13 +100,14 @@ export const PropertyList = () => {
                   <button
                     className="p-2 bg-blue-500 rounded-md hover:bg-blue-700"
                     onClick={() => updateStatus(property._id, "APPROVED")}
-                    disabled={ property.isVerified}
+                    disabled={ property.status == 'APPROVED'? true : false}
                   >
                     Approve
                   </button>
                   <button
                     className="p-2 bg-red-500 hover:bg-red-700 rounded-md"
                     onClick={() => updateStatus(property._id, "REJECTED")}
+                    disabled={property.status == 'REJECTED'? true : false}
                   >
                     Reject
                   </button>

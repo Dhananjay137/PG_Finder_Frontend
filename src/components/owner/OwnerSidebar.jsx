@@ -4,11 +4,13 @@ import {
 } from 'lucide-react'
 import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { useLogout } from '../../hooks/useLogout'
 
 export const OwnerSidebar = () => {
   const [isOpen, setIsOpen] = useState(true)
   const [openMenus, setOpenMenus] = useState({})
   const { pathname } = useLocation()
+  const logOut = useLogout()
 
   const menuItems = [
     { name: 'Dashboard', path: '/owner/dashboard', icon: <LayoutDashboard size={20} /> },
@@ -99,7 +101,10 @@ export const OwnerSidebar = () => {
 
       {/* footer */}
       <div className='border-t'>
-        <button className='flex w-full items-center px-3 py-3 gap-4 text-gray-600 hover:bg-red-50 hover:text-red-600 rounded-lg transition-colors'>
+        <button 
+        className='flex w-full items-center px-3 py-3 gap-4 text-gray-600 hover:bg-red-50 hover:text-red-600 rounded-lg transition-colors'
+        onClick={() => logOut()}
+        >
           <LogOut size={20} className='shrink-0' />
           <span className={`font-medium text-sm transition-all duration-300 whitespace-nowrap ${!isOpen ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
             Log Out

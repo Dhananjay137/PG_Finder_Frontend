@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import { StatCard } from '../utils/StatCard'
 import { Pie } from 'react-chartjs-2'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import api from '../../api/axiosInstance'
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -13,9 +14,10 @@ export const AdminDashboard = () => {
   useEffect(() => {
     getDashboardStatus()
   },[])
+  
   const getDashboardStatus = async() => {
     try {
-      const res = await axios.get('/dashboard/dashboard')
+      const res = await api.get('/dashboard/dashboard')
       console.log(res?.data)
       setData(res?.data?.data)
 
