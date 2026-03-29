@@ -30,11 +30,15 @@ import { FlatDetailForm } from "../components/owner/FlatDetailForm"
 import { AddRoomForm } from "../components/owner/AddRoomForm"
 import { ViewUser } from "../components/utils/ViewUser"
 import ProtectedRoutes from "../components/ProtectedRoutes"
+import { ForgetPassword } from "../components/ForgetPassword"
+import { PasswordReset } from "../components/utils/PasswordReset"
  
 const router = createBrowserRouter([
   {path:"/", element:<Login />},
   {path:"/signUp", element: <SignUp/>},
   {path: "/aboutUs", element: <AboutUs/>},
+  {path: "/password-forget", element: <ForgetPassword/>},
+  {path: "/password-reset/:token", element: <PasswordReset/>},
 
   {path:"/seeker", element: 
     <ProtectedRoutes userRoles={['SEEKER']}>
