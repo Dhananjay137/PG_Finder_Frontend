@@ -12,7 +12,7 @@ export const SeekerHomePage = () => {
       {/* flex-1 makes this area grow to fill all space between Nav and Footer */}
       {/* overflow-y-auto allows ONLY this area to scroll if content is long */}
       <main className='flex-1 bg-gray-50 overflow-y-auto'>
-        <div className='max-w-7xl mx-auto px-2 md:px-6 min-h-[calc(100vh-64px)] flex flex-col'>
+        <div className='max-w-7xl mx-auto p-2 md:px-6 min-h-[calc(100vh-64px)] flex flex-col'>
           <Outlet />
         </div>
       </main>

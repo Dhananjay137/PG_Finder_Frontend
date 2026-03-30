@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { MapPin, Phone, Mail, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import api from '../../api/axiosInstance';
 
-export const Property = ({ property }) => {
+export const Property = ({ property, wishID, savedNote }) => {
   let type = ''
   const [user, setUser] = useState(null)
+  const [showModal, setShowModal] = useState(false);
+  const [note, setNote] = useState("");
+  const [isSaved, setIsSaved] = useState(false);
   const {
     _id,
     propertyName,
@@ -37,10 +42,50 @@ export const Property = ({ property }) => {
     }
   }
 
+  const addToWishlist = async(propertyID) => {
+    try {
+
+      const res = await api.post('/wishlist/wish',{ propertyID, note})
+      console.log(res)
+
+      if(res?.data?.exists && res?.status == 200){
+        toast.warn(res?.data?.message)
+        setShowModal(false);
+        setIsSaved(false)
+        setNote('')
+      }
+
+      if(res?.status == 201){
+        setIsSaved(true);
+        setShowModal(false);
+        toast.success(res?.data?.message)
+      }
+
+    } catch(err) {
+      console.log(err?.message)
+      toast.error(err?.message)
+    }
+  }
+
+  const removeFromWishlist = async(id) => {
+    try{
+      const res = await api.delete(`/wishlist/wish/${id}`)
+      console.log(res)
+
+      if(res?.status == 200){
+        toast.success(res?.data?.message)
+      }
+
+    }catch(err) {
+      console.log(err)
+      toast.error(err?.message)
+    }
+  }
+
   //daynamicaly add role
   const handleViewNavigate =( id, type ) => {
     const role = user?.role?.toLowerCase();
-    console.log(role)
+    //console.log(role)
     if(type === 'PG'){
       navigate(`/${role}/detail/pg/${_id}`)
     }
@@ -60,7 +105,7 @@ export const Property = ({ property }) => {
   };
 
   return (
-    <div className="max-w-sm text-gray-700 bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+    <div className="mx-w-full md:max-w-sm text-gray-700 bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow duration-300">
       {/* Image Section */}
       <div className="relative h-48">
         <img 
@@ -134,26 +179,69 @@ export const Property = ({ property }) => {
             className="w-full bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 text-[11px] font-bold py-2.5 rounded-lg transition-colors tracking-wider uppercase">
               View Detils
             </button>}
-            
+
+            { !wishID && user?.role == 'SEEKER' && <button 
+              onClick={() => setShowModal(true)}
+              className={`p-2 text-[11px] font-bold rounded-md border bg-gray-50 border-gray-400 uppercase hover: ${isSaved ? 'bg-red-100 border-red-500' : 'bg-white'}`}
+            >
+              <span className={isSaved ? 'text-red-500' : 'text-gray-400'}>Add to Wishlist</span>
+            </button>}
+
+            { wishID && user?.role == 'SEEKER' && <button 
+              onClick={() => removeFromWishlist(wishID)}
+              className={`p-2 text-[11px] font-bold rounded-md border border-gray-400 bg-gray-50 hover:bg-gray-100 uppercase`}
+            >
+              <span className='text-gray-700'>Remove from Wishlist</span>
+            </button>}
           </div>
 
         {/* Visit Schedule Footer */}
         <div className="pt-3 border-t border-gray-50 flex items-center justify-between">
           <div className="flex items-center text-[11px] font-medium text-gray-700">
             <Clock size={12} className="mr-1 text-blue-500" />
-            <span>{visitSchedule.dayType}</span>
+            <span>{visitSchedule?.dayType}</span>
           </div>
           <div className="text-[11px] text-gray-500 bg-gray-50 px-2 py-0.5 rounded border border-gray-100">
-            {visitSchedule.startTime} - {visitSchedule.endTime}
+            {visitSchedule?.startTime} - {visitSchedule?.endTime}
           </div>
         </div>
         
-        {visitSchedule.allDayAccess && (
+        {visitSchedule?.allDayAccess && (
           <div className="mt-2 flex items-center text-[10px] text-emerald-600 font-semibold uppercase">
             <AlertCircle size={10} className="mr-1" /> 24/7 Access Available
           </div>
         )}
       </div>
+      {showModal && (
+        <div className="fixed inset-0 bg-white/30 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl w-80">
+            <h3 className="text-lg font-bold mb-3">Add to Wishlist</h3>
+            <p className="text-sm text-gray-500 mb-2">Write a private note about this property:</p>
+            
+            <textarea 
+              className="w-full border p-2 rounded-md h-24 focus:ring-2 focus:ring-blue-500 outline-none"
+              placeholder="e.g. Near my favorite cafe..."
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+            />
+
+            <div className="flex justify-end gap-2 mt-4">
+              <button 
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={() => addToWishlist(_id)}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                Save Property
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
