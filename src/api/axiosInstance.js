@@ -2,9 +2,9 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: "http://localhost:3000",
-  headers: {
-    'Content-Type':'application/json'
-  }
+  // headers: {
+  //   'Content-Type':'application/json'
+  // }
 })
 
 // REQUEST Interceptor: Attach the token to every outgoing request
