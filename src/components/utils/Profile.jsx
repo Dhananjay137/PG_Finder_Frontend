@@ -12,6 +12,7 @@ export const Profile = () => {
     if (savedUser?.token) {
       setDecodedUser(jwtDecode(savedUser?.token));
       setToken(savedUser?.token)
+      //console.log(savedUser.token)
     }
   }, [isEditing]);
 

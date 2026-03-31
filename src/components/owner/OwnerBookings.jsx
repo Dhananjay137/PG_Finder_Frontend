@@ -53,7 +53,6 @@ export const OwnerBookings = () => {
     try{
       const res = await api.get('/booking/booking',{
         params: {
-          ownerId: '69b3a9c5dedfbdfd03c51f89',
           status: status
         }
       })
@@ -92,45 +91,45 @@ export const OwnerBookings = () => {
               <tr key={booking._id} className={`text-center text-sm ${i%2 == 0 ? 'bg-gray-50':'bg-white'} hover:bg-gray-100`}>
                 <td className='p-2'>{i+1}</td>
                 <td className="p-2">
-                  <p>{booking.seekerID.firstName} {booking.seekerID.lastName}</p>
+                  <p>{booking?.seekerID?.firstName} {booking?.seekerID?.lastName}</p>
                 </td>
                 <td 
                   className='p-2 cursor-pointer'
-                  onClick={() => handleFile(booking.bookingDocumentID.fileUrl,booking.bookingDocumentID.documentName)}
+                  onClick={() => handleFile(booking?.bookingDocumentID?.fileUrl,booking?.bookingDocumentID?.documentName)}
                 >
-                  {booking.bookingDocumentID.documentName}
+                  {booking?.bookingDocumentID?.documentName}
                 </td>
                 {/* <td className='p-2'>{booking.ownerID}</td> */}
                 <td 
                   className="p-2 cursor-pointer"
                   onClick={() => viewDetailNavigate(booking?.propertyID?._id,booking?.propertyID.propertyType)}
                 >
-                  {booking.propertyID.propertyName}
+                  {booking?.propertyID?.propertyName}
                 </td>
-                <td className="p-2">{booking.pgRoomPricingID.roomType}</td>
-                <td className='p-2'>₹ {booking.bookingAmount}</td>
-                <td className="p-2">{new Date(booking.bookingDate).toLocaleString()}</td>
-                <td className="p-2">{new Date(booking.expectedCheckInDate).toLocaleString()}</td>
+                <td className="p-2">{booking?.pgRoomPricingID?.roomType}</td>
+                <td className='p-2'>₹ {booking?.bookingAmount}</td>
+                <td className="p-2">{new Date(booking?.bookingDate).toLocaleString()}</td>
+                <td className="p-2">{new Date(booking?.expectedCheckInDate).toLocaleString()}</td>
                 <td className="p-1">
                   <span className={`p-1 font-bold text-xs rounded-md ${STATUS_STYLES[booking.status] || STATUS_STYLES.DEFAULT}`}>
                     {booking.status}
                   </span>
                 </td>
                 <td className='text-white p-1 space-x-1'>
-                  <button 
+                  {booking?.status === 'PENDING' && <button 
                   onClick={() => updateBooking(booking._id,'CONFIRMED')}
                   className="p-2 bg-blue-500 hover:bg-blue-700 rounded-md"
-                  disabled={booking.status === 'CONFIRMED' ? true: false}
+                  disabled={booking?.status === 'CONFIRMED' ? true: false}
                   >
                     Confirm
-                  </button>
-                  <button
+                  </button>}
+                  {booking?.status === 'PENDING' && <button
                   onClick={() => updateBooking(booking._id,'REJECTED')}
                   className="p-2 bg-red-500 hover:bg-red-700 rounded-md"
-                  disabled={booking.status === 'REJECTED' ? true: false}
+                  disabled={booking?.status === 'REJECTED' ? true: false}
                   >
                     Reject
-                  </button>
+                  </button>}
                 </td>
               </tr>
             ))}

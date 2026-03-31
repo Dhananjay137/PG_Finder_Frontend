@@ -18,7 +18,7 @@ export const Home = () => {
       const res = await api.get(`/property/properties`,{
         params: {
           city: city,
-          status: 'APPROVED'
+          // status: 'APPROVED'
         }
       })
       console.log(res)
@@ -57,7 +57,7 @@ export const Home = () => {
       </div>
 
       {/* 4. Attach the ref to the target section */}
-      <div ref={detailsRef} className='min-h-screen bg-white p-0 md:p-10 border-t'>
+      <div ref={detailsRef} className='min-h-screen p-0 md:p-10 border-t border-gray-200'>
         <h3 className='text-2xl font-bold text-gray-700 mt-12'>Property Details</h3>
         <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mt-8'>
            {properties?.map((property) => { return(

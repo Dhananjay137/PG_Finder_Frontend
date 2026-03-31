@@ -105,7 +105,7 @@ export const Property = ({ property, wishID, savedNote }) => {
   };
 
   return (
-    <div className="mx-w-full md:max-w-sm text-gray-700 bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+    <div className="mx-w-full md:max-w-sm text-gray-700 bg-white rounded-md overflow-hidden border border-gray-300 hover:shadow-lg transition-shadow duration-300">
       {/* Image Section */}
       <div className="relative h-48">
         <img 
@@ -118,13 +118,13 @@ export const Property = ({ property, wishID, savedNote }) => {
             {propertyType}
           </span>
           {isVerified && (
-            <span className="p-1 bg-blue-600 text-white rounded-full shadow-lg">
+            <span className="p-1 bg-blue-600 text-white rounded-full text-center shadow-lg">
               <CheckCircle2 size={12} />
             </span>
           )}
         </div>
-        <div className={`absolute top-2 right-2 px-2 py-1 rounded-full text-[10px] font-bold border ${statusStyles[status] || statusStyles.PENDING}`}>
-          {status}
+        <div className={`absolute top-2 right-2 px-2 py-1 rounded-md text-[10px] font-bold border ${statusStyles[status] || statusStyles.PENDING}`}>
+          {status.replaceAll('_',' ')}
         </div>
       </div>
 
