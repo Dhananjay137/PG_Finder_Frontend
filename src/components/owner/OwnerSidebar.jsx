@@ -21,7 +21,8 @@ export const OwnerSidebar = () => {
         { name: 'Add', path: '/owner/add-property', icon: <PlusCircle size={16} /> },
         { name: 'Pending', path: '/owner/properties/pending', icon: <Clock size={16} /> },
         { name: 'Approved', path: '/owner/properties/approved', icon: <CheckCircle2 size={16} /> },
-        { name: 'Rejected', path: '/owner/properties/rejected', icon: <XCircle size={16} /> }
+        { name: 'Rejected', path: '/owner/properties/rejected', icon: <XCircle size={16} /> },
+        { name: 'Rent Out', path: '/owner/properties/rent_out', icon: <XCircle size={16} /> }
       ] 
     },
     { 

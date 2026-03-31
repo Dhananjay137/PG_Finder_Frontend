@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { BookmarkCheck, ChevronDown, Heart, HelpCircle, House, Info, LogOut, Menu, MessageSquare, MessageSquareWarning, User, XLineTop } from 'lucide-react'
+import { BookmarkCheck, ChevronDown, Dock, Heart, HelpCircle, House, Info, LogOut, Menu, MessageSquare, MessageSquareWarning, User, XLineTop } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useLogout } from '../../hooks/useLogout'
@@ -23,7 +23,7 @@ export const SeekerNavbar = () => {
   // const dekstopProfileTags = ['Details','Update','Reports','Feedback','Log Out']
   const profileTabs = [
     {name:'Details',path:'/seeker/profile',icon:<User size={16}/>},
-    {name:'Update',path:'/seeker/profile',icon:<User size={16}/>},
+    {name:'Booking Doc',path:'/seeker/bookingDoc',icon:<Dock size={16}/>},
     {name:'Report',path:'/seeker/reports',icon:<MessageSquareWarning size={16}/>},
     {name:'Feedback',path:'/seeker/feedback',icon:<MessageSquare size={16}/>},
   ]
