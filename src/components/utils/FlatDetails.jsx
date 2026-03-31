@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { 
   MapPin, BedDouble, Bath, Square, Layers, Compass, 
@@ -10,8 +10,8 @@ import {
 import api from '../../api/axiosInstance';
 
 const InfoCard = ({ icon, label, value }) => (
-  <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
-    <div className="p-2 bg-white rounded-lg shadow-sm text-indigo-600">{icon}</div>
+  <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-md border border-gray-100">
+    <div className="p-2 bg-white rounded-md shadow-sm text-indigo-600">{icon}</div>
     <div>
       <p className="text-xs text-gray-500 uppercase font-semibold tracking-wider">{label}</p>
       <p className="text-sm font-bold text-gray-800">{value}</p>
@@ -23,6 +23,7 @@ export const FlatDetails = () => {
   const { id } = useParams();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate()
 
   useEffect(() => {
     getFlatDetails();
@@ -38,24 +39,32 @@ export const FlatDetails = () => {
       setLoading(false);
     }
   };
+  const bookFlat = () => {
+    navigate(`/seeker/booking/${data?.propertyId?.propertyType}/${data?.propertyId?._id}`,{
+      state: {
+        ownerID: data?.propertyId?.ownerId,
+        bookingAmount: data?.expectedRent
+      }
+    })
+  }
 
   if (loading) return <div className="text-center p-20 text-indigo-600 font-medium">Loading Flat Details...</div>;
   if (!data) return <div className="text-center p-20">No data found.</div>;
 
-  const property = data.propertyId;
+  const property = data?.propertyId;
 
   return (
-    <div className="max-w-6xl mx-auto p-4 md:p-8 space-y-8">
+    <div className="max-w-6xl mx-auto p-2 md:p-8 space-y-4 md:space-y-8">
       
       {/* 1. Image Gallery Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 h-[300px] md:h-[450px] rounded-3xl overflow-hidden shadow-xl">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 h-[300px] md:h-[450px] rounded-md overflow-hidden shadow-md">
         <div className="md:col-span-2 relative h-full">
           <img 
             src={property?.gallery[0]?.fileUrl} 
             className="w-full h-full object-cover" 
             alt={property?.gallery[0]?.label} 
           />
-          <div className="absolute bottom-4 left-4 bg-black/60 text-white px-3 py-1 rounded-lg text-xs backdrop-blur-sm">
+          <div className="absolute bottom-4 left-4 bg-black/60 text-white px-3 py-1 rounded-md text-xs backdrop-blur-sm">
             {property?.gallery[0]?.label}
           </div>
         </div>
@@ -74,7 +83,7 @@ export const FlatDetails = () => {
       </div>
 
       {/* 2. Header & Price */}
-      <div className="flex flex-col md:flex-row justify-between items-start gap-4 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+      <div className="flex flex-col md:flex-row justify-between items-start gap-4 bg-white p-6 rounded-md border border-gray-100 shadow-sm">
         <div>
           <div className="flex items-center gap-2 mb-2">
             <span className="bg-indigo-600 text-white text-[10px] font-black px-2 py-1 rounded uppercase tracking-tighter">
@@ -91,18 +100,18 @@ export const FlatDetails = () => {
             <MapPin size={18} className="text-red-500"/> {property?.houseNo}, {property?.landmarkStreet}, {property?.city}
           </p>
         </div>
-        <div className="bg-gray-50 border border-indigo-100 p-5 rounded-2xl text-center md:text-right min-w-[220px]">
+        <div className="bg-gray-50 border border-indigo-100 p-5 rounded-md text-center md:text-right min-w-[220px]">
           <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-1">Monthly Rent</p>
           <div className="text-4xl font-black text-indigo-600">₹{data.expectedRent}</div>
           <div className="text-xs font-bold text-gray-500 mt-1">Deposit: ₹{data.securityDeposit}</div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
         <div className="lg:col-span-2 space-y-8">
           
           {/* Main Specifications */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4">
             <InfoCard icon={<BedDouble size={20}/>} label="BHK" value={data.bhkType} />
             <InfoCard icon={<Square size={20}/>} label="Area" value={`${data.buildUpArea} Sqft`} />
             <InfoCard icon={<Layers size={20}/>} label="Floor" value={`${data.floorNo}/${data.totalFloor}`} />
@@ -112,16 +121,16 @@ export const FlatDetails = () => {
           </div>
 
           {/* Visit Schedule & Location */}
-          <div className="bg-indigo-50/50 p-6 rounded-2xl border border-indigo-100 grid md:grid-cols-2 gap-6">
+          <div className="bg-indigo-50/50 p-6 rounded-md border border-indigo-100 grid md:grid-cols-2 gap-4 md:gap-6">
             <div>
-              <h4 className="text-sm font-bold text-indigo-900 flex items-center gap-2 mb-3">
+              <h4 className="text-sm font-bold text-indigo-900 flex items-center gap-2 md:mb-3">
                 <Clock size={18}/> Visit Timings ({property?.visitSchedule?.dayType})
               </h4>
               <p className="text-2xl font-black text-indigo-600">
                 {property?.visitSchedule?.startTime} - {property?.visitSchedule?.endTime}
               </p>
               {property?.visitSchedule?.allDayAccess && (
-                <span className="text-[10px] bg-indigo-200 text-indigo-700 px-2 py-0.5 rounded-full font-bold mt-2 inline-block">
+                <span className="text-[10px] bg-indigo-200 text-indigo-700 px-2 py-0.5 rounded-md font-bold mt-2 inline-block">
                   ALL DAY ACCESS
                 </span>
               )}
@@ -136,12 +145,12 @@ export const FlatDetails = () => {
 
           {/* Amenities */}
           <div>
-            <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+            <h3 className="text-xl font-bold md:mb-4 flex items-center gap-2">
                <ShieldCheck className="text-green-600"/> Society Amenities
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {data.amenities.map((item) => (
-                <div key={item} className="flex items-center gap-2 p-3 bg-white border border-gray-100 rounded-xl">
+                <div key={item} className="flex items-center gap-2 p-3 bg-white border border-gray-100 rounded-md">
                   <CheckCircle2 size={16} className="text-green-500 shrink-0"/>
                   <span className="text-xs font-bold text-gray-700">{item.replace(/_/g, ' ')}</span>
                 </div>
@@ -151,23 +160,23 @@ export const FlatDetails = () => {
         </div>
 
         {/* Right Sidebar: Contact & Quick Info */}
-        <div className="space-y-6">
-          <div className="bg-gray-900 text-white p-6 rounded-3xl shadow-2xl sticky top-6">
+        <div className="space-y-3 md:space-y-6">
+          <div className="bg-gray-900 text-white p-6 rounded-md shadow-md sticky top-6">
              <div className="mb-6">
                 <h3 className="text-xl font-bold mb-1">Contact Owner</h3>
                 <p className="text-xs text-gray-400">Green View Residency Management</p>
              </div>
              
-             <div className="space-y-4 mb-8">
-                <a href={`tel:${property?.propertyContact}`} className="flex items-center gap-4 p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-colors">
-                   <div className="p-2 bg-indigo-500 rounded-lg"><Phone size={18}/></div>
+             <div className="space-y-3 md:space-y-4 mb-8">
+                <a href={`tel:${property?.propertyContact}`} className="flex items-center gap-4 p-3 bg-white/5 rounded-md hover:bg-white/10 transition-colors">
+                   <div className="p-2 bg-indigo-500 rounded-md"><Phone size={18}/></div>
                    <div>
                       <p className="text-[10px] text-gray-400 uppercase">Phone</p>
                       <p className="text-sm font-bold">{property?.propertyContact}</p>
                    </div>
                 </a>
-                <a href={`mailto:${property?.propertyEmail}`} className="flex items-center gap-4 p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-colors">
-                   <div className="p-2 bg-pink-500 rounded-lg"><Mail size={18}/></div>
+                <a href={`mailto:${property?.propertyEmail}`} className="flex items-center gap-4 p-3 bg-white/5 rounded-md hover:bg-white/10 transition-colors">
+                   <div className="p-2 bg-pink-500 rounded-md"><Mail size={18}/></div>
                    <div>
                       <p className="text-[10px] text-gray-400 uppercase">Email</p>
                       <p className="text-sm font-bold truncate max-w-[150px]">{property?.propertyEmail}</p>
@@ -192,8 +201,11 @@ export const FlatDetails = () => {
                 </div>
              </div>
 
-             <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-black py-4 rounded-2xl mt-8 transition-transform active:scale-95 shadow-lg shadow-indigo-600/30">
-                BOOK VISIT NOW
+             <button 
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-black py-4 rounded-md mt-8 transition-transform active:scale-95 shadow-lg shadow-indigo-600/30"
+              onClick={bookFlat}
+            >
+                BOOK NOW
              </button>
           </div>
         </div>

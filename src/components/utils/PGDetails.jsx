@@ -6,19 +6,19 @@ import {
 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../api/axiosInstance';
 
 // Helper component for Badges
 const Badge = ({ icon, label, color }) => (
-  <span className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium ${color}`}>
+  <span className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium ${color}`}>
     {icon} {label}
   </span>
 );
 
 // Helper component for Food Items
 const FoodItem = ({ label, active }) => (
-  <div className="flex items-center justify-between p-2 bg-white rounded-lg border border-orange-100">
+  <div className="flex items-center justify-between p-2 bg-white rounded-md border border-orange-100">
     <span className="text-sm font-medium text-gray-700">{label}</span>
     {active ? <CheckCircle2 size={16} className="text-green-500" /> : <XCircle size={16} className="text-red-400" />}
   </div>
@@ -29,6 +29,7 @@ export const PGDetails = () => {
   const [roomData, setRoomData] = useState([]);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
+  const navigate = useNavigate()
 
   useEffect(() => {
     getPGDetails();
@@ -40,6 +41,7 @@ export const PGDetails = () => {
       const res = await api.get(`/pg/pg/${id}`);
       if (res.status === 200) {
         setData(res?.data?.data);
+        console.log(res)
       }
     } catch (err) {
       toast.error(err?.response?.data?.message || err.message);
@@ -53,11 +55,23 @@ export const PGDetails = () => {
       const res = await api.get(`/pg/pg/rooms/${id}`);
       if (res.status === 200) {
         setRoomData(res?.data?.data);
+        console.log(res)
       }
     } catch (err) {
       toast.error(err?.message);
     }
   };
+  const bookRoom = (id,securityDeposit,roomType) => {
+    console.log(id,securityDeposit,roomType)
+    navigate(`/seeker/booking/${data?.propertyId?.propertyType}/${data?.propertyId?._id}`,{
+      state: {
+        ownerID: data?.propertyId?.ownerId,
+        pgRoomPricingID: id,
+        bookingAmount: securityDeposit,
+        roomType: roomType
+      }
+    })
+  }
 
   if (loading) return <div className="text-center p-20 font-medium text-indigo-600">Loading Property Details...</div>;
   if (!data) return <div className="text-center p-20">No data found.</div>;
@@ -68,7 +82,7 @@ export const PGDetails = () => {
     <div className="max-w-5xl mx-auto p-0 md:p-6 space-y-6 bg-gray-50/50">
       
       {/* 1. Image Gallery Header */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 h-64 md:h-96 rounded-2xl overflow-hidden shadow-md">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 h-64 md:h-96 rounded-md overflow-hidden shadow-md">
         <div className="relative h-full bg-gray-200">
           <img 
             src={property?.gallery[0]?.fileUrl || 'https://via.placeholder.com'} 
@@ -77,7 +91,7 @@ export const PGDetails = () => {
           />
           <div className="absolute top-4 left-4 flex gap-2">
             {property?.isVerified && (
-              <span className="bg-green-600 text-white px-3 py-1 rounded-full text-xs flex items-center gap-1 shadow-lg">
+              <span className="bg-green-600 text-white px-3 py-1 rounded-md text-xs flex items-center gap-1 shadow-lg">
                 <BadgeCheck size={14}/> Verified
               </span>
             )}
@@ -95,7 +109,7 @@ export const PGDetails = () => {
       </div>
 
       {/* 2. Main Title & Basic Info */}
-      <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+      <div className="bg-white p-6 rounded-md shadow-sm border border-gray-100">
         <div className="flex flex-col md:flex-row justify-between items-start gap-4">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">{property?.propertyName}</h1>
@@ -120,13 +134,13 @@ export const PGDetails = () => {
         <div className="lg:col-span-2 space-y-6">
           
           {/* NEW: Room details section */}
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+          <div className="bg-white p-6 rounded-md border border-gray-100 shadow-sm">
             <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
               <DoorOpen className="text-blue-600" /> Available Room Types
             </h3>
             <div className="space-y-4">
               {roomData.length > 0 ? roomData.map((room) => (
-                <div key={room._id} className="border border-gray-100 rounded-xl p-4 hover:border-blue-200 transition-colors bg-gray-50/30">
+                <div key={room._id} className="border border-gray-100 rounded-md p-4 hover:border-blue-200 transition-colors bg-gray-50/30">
                   <div className="flex justify-between items-center mb-3">
                     <span className="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-0.5 rounded uppercase tracking-wider">
                       {room.roomType} Sharing
@@ -143,7 +157,7 @@ export const PGDetails = () => {
                     </div>
                     <div className="flex flex-col">
                       <span className="text-xs text-gray-400 flex items-center gap-1"><ShieldCheck size={12}/> Deposit</span>
-                      <span className="font-bold text-gray-800">₹{room.depositAmount}</span>
+                      <span className="font-bold text-gray-800">₹{room.securityDeposit}</span>
                     </div>
                     <div className="flex flex-col">
                       <span className="text-xs text-gray-400 flex items-center gap-1"><Calendar size={12}/> Available From</span>
@@ -161,6 +175,13 @@ export const PGDetails = () => {
                       ))}
                     </div>
                   </div>
+
+                  {room?.isAvailable && <div className='w-full pt-2 text-sm font-bold'>
+                    <button 
+                      className='p-2.5 w-full bg-green-600 text-white border border-green-200 rounded-md'
+                      onClick={() => bookRoom(room?._id,room?.securityDeposit,room?.roomType)}
+                      >Book Room</button>
+                  </div>}
                 </div>
               )) : (
                 <p className="text-gray-400 text-sm italic">No room configurations listed yet.</p>
@@ -169,7 +190,7 @@ export const PGDetails = () => {
           </div>
 
           {/* Rules & Policy */}
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+          <div className="bg-white p-6 rounded-md border border-gray-100 shadow-sm">
             <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
               <ShieldCheck className="text-indigo-600" /> Stay Rules & Policies
             </h3>
@@ -196,7 +217,7 @@ export const PGDetails = () => {
           </div>
 
           {/* Amenities */}
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+          <div className="bg-white p-6 rounded-md border border-gray-100 shadow-sm">
             <h3 className="text-xl font-bold mb-4">What this place offers</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {data?.amenities?.map((item) => (
@@ -211,12 +232,12 @@ export const PGDetails = () => {
 
         {/* Right Column */}
         <div className="space-y-6">
-          <div className="bg-orange-50 p-6 rounded-2xl border border-orange-100">
+          <div className="bg-orange-50 p-6 rounded-md border border-orange-100">
             <h3 className="text-lg font-bold mb-4 flex items-center gap-2 text-orange-800">
               <Utensils /> Food Services
             </h3>
             {!data?.foodIncluded ? (
-              <p className="text-orange-700 bg-white/50 p-3 rounded-lg text-sm">Self-Cooking / No Food Included</p>
+              <p className="text-orange-700 bg-white/50 p-3 rounded-md text-sm">Self-Cooking / No Food Included</p>
             ) : (
               <div className="space-y-3">
                 <FoodItem label="Breakfast" active={data?.breakfast} />
@@ -226,14 +247,16 @@ export const PGDetails = () => {
             )}
           </div>
 
-          <div className="bg-gray-900 text-white p-6 rounded-2xl shadow-xl sticky top-6">
+          <div className="bg-gray-900 text-white p-6 rounded-md shadow-xl sticky top-6">
              <h3 className="text-lg font-bold mb-4">Interested in staying?</h3>
              <div className="space-y-4">
-               <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2">
+               <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-md transition-all flex items-center justify-center gap-2">
                  <Phone size={18}/> Contact Owner
                </button>
-               <button className="w-full bg-white/10 hover:bg-white/20 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2">
-                 <Mail size={18}/> Send Inquiry
+               <button 
+                className="w-full bg-white/10 hover:bg-white/20 text-white font-bold py-3 rounded-md transition-all flex items-center justify-center gap-2"
+                >
+                 <Mail size={18}/> Send Enquiry
                </button>
              </div>
              <div className="mt-6 pt-6 border-t border-white/10 text-center">
