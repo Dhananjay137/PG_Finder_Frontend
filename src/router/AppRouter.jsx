@@ -32,6 +32,10 @@ import { ViewUser } from "../components/utils/ViewUser"
 import ProtectedRoutes from "../components/ProtectedRoutes"
 import { ForgetPassword } from "../components/ForgetPassword"
 import { PasswordReset } from "../components/utils/PasswordReset"
+import { BookingDocumentForm } from "../components/seeker/BookingDocumentForm"
+import { BookingDocument } from "../components/seeker/BookingDocument"
+import { MainBookingForm } from "../components/seeker/MainBookingForm"
+import { BookingDetails } from "../components/seeker/BookingDetails"
  
 const router = createBrowserRouter([
   {path:"/", element:<Login />},
@@ -55,7 +59,10 @@ const router = createBrowserRouter([
       {path:"reports", element:<Reports/>},
       {path:"profile", element:<Profile/>},
       {path:"detail/pg/:id", element:<PGDetails/>},
-      {path:"detail/flat/:id", element:<FlatDetails/>}
+      {path:"detail/flat/:id", element:<FlatDetails/>},
+      {path:"booking/:propertyType/:propertyId", element:<MainBookingForm/>},
+      {path:'bookingDoc',element: <BookingDocument/>},
+      {path:'booking-details/:id', element:<BookingDetails/>}
     ]
   },
   {path:"/owner", element: 
