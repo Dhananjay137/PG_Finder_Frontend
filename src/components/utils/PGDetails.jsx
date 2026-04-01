@@ -60,7 +60,7 @@ export const PGDetails = () => {
     try{
       const res = await api.get('/feedback/feedbacks',{
         params: {
-          propertyID: data?.propertyId?._id
+          propertyID: id
         }
       })
 

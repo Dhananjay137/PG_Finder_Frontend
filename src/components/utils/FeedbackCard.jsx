@@ -6,7 +6,7 @@ export const FeedbackCard = ({ feedback }) => {
   const { userID, propertyID, rating, comment, createdAt, _id } = feedback
 
   return (
-    <div key={_id} className="bg-white rounded-md border border-gray-100 shadow-sm overflow-hidden mb-0">
+    <div key={_id} className="bg-white rounded-md border border-gray-100 shadow-sm overflow-hidden mb-8">
       
       {/* HEADER: User Profile & Meta Data */}
       <div className="p-4 bg-gray-50/50 border-b border-gray-100 flex items-center justify-between">
