@@ -7,7 +7,12 @@ import {
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { FeedbackCard } from './FeedbackCard';
 import api from '../../api/axiosInstance';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 // Helper component for Badges
 const Badge = ({ icon, label, color }) => (
@@ -27,6 +32,7 @@ const FoodItem = ({ label, active }) => (
 export const PGDetails = () => {
   const [data, setData] = useState(null);
   const [roomData, setRoomData] = useState([]);
+  const [feedbacks, setFeedbacks] = useState([])
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate()
@@ -34,6 +40,7 @@ export const PGDetails = () => {
   useEffect(() => {
     getPGDetails();
     getRooms();
+    getFeedbacks();
   }, [id]);
 
   const getPGDetails = async () => {
@@ -49,7 +56,23 @@ export const PGDetails = () => {
       setLoading(false);
     }
   };
+  const getFeedbacks = async() => {
+    try{
+      const res = await api.get('/feedback/feedbacks',{
+        params: {
+          propertyID: data?.propertyId?._id
+        }
+      })
 
+      console.log(res)
+      if(res?.status == 200){
+        setFeedbacks(res?.data?.data)
+      }
+    } catch(err){
+      console.log(err)
+      toast.error(err?.response?.data?.message || err?.message)
+    }
+  }
   const getRooms = async () => {
     try {
       const res = await api.get(`/pg/pg/rooms/${id}`);
@@ -178,9 +201,11 @@ export const PGDetails = () => {
 
                   {room?.isAvailable && <div className='w-full pt-2 text-sm font-bold'>
                     <button 
-                      className='p-2.5 w-full bg-green-600 text-white border border-green-200 rounded-md'
+                      className='p-2.5 w-full bg-green-600 text-white border border-green-200 hover:bg-green-700 rounded-md'
                       onClick={() => bookRoom(room?._id,room?.securityDeposit,room?.roomType)}
-                      >Book Room</button>
+                    >
+                      Book Room
+                    </button>
                   </div>}
                 </div>
               )) : (
@@ -231,7 +256,8 @@ export const PGDetails = () => {
         </div>
 
         {/* Right Column */}
-        <div className="space-y-6">
+        <div className="space-y-3">
+          {/* Food */}
           <div className="bg-orange-50 p-6 rounded-md border border-orange-100">
             <h3 className="text-lg font-bold mb-4 flex items-center gap-2 text-orange-800">
               <Utensils /> Food Services
@@ -247,6 +273,38 @@ export const PGDetails = () => {
             )}
           </div>
 
+          {/* feedbacks */}
+          <div className="w-sm md:w-full py-4 sticky">
+          <Swiper
+            modules={[Autoplay, Pagination]}
+            spaceBetween={20}          // Space between cards
+            slidesPerView={1}         // Show 1 card at a time (mobile)
+            loop={feedbacks.length > 1}               // Continuous loop
+            autoplay={{
+              delay: 3000,            // 3 seconds per slide
+              disableOnInteraction: false,
+            }}
+            pagination={{ clickable: true }}
+        
+            className="pb-12"         // Padding for pagination dots
+          >
+            {feedbacks?.map((feedback) => (
+              <SwiperSlide key={feedback?._id}>
+                <FeedbackCard feedback={feedback} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+
+          {/* Custom CSS to style Swiper dots if needed */}
+          <style>{`
+          .swiper-pagination-bullet-active {
+            background: #2563eb !important; /* blue-600 */
+          }
+          `}
+          </style>
+          </div>
+
+          {/* contact owner & inquiry */}
           <div className="bg-gray-900 text-white p-6 rounded-md shadow-xl sticky top-6">
              <h3 className="text-lg font-bold mb-4">Interested in staying?</h3>
              <div className="space-y-4">
@@ -265,6 +323,7 @@ export const PGDetails = () => {
           </div>
         </div>
       </div>
+
     </div>
   );
 };

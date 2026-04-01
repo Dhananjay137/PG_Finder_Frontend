@@ -8,6 +8,11 @@ import {
   Calendar, Wallet, Building2, UserCircle, Clock, Phone, Mail
 } from 'lucide-react';
 import api from '../../api/axiosInstance';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { FeedbackCard } from './FeedbackCard';
 
 const InfoCard = ({ icon, label, value }) => (
   <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-md border border-gray-100">
@@ -22,11 +27,13 @@ const InfoCard = ({ icon, label, value }) => (
 export const FlatDetails = () => {
   const { id } = useParams();
   const [data, setData] = useState(null);
+  const [feedbacks, setFeedbacks] = useState([])
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate()
 
   useEffect(() => {
     getFlatDetails();
+    getFeedbacks()
   }, [id]);
 
   const getFlatDetails = async () => {
@@ -39,6 +46,23 @@ export const FlatDetails = () => {
       setLoading(false);
     }
   };
+  const getFeedbacks = async() => {
+    try{
+      const res = await api.get('/feedback/feedbacks',{
+        params: {
+          propertyID: data?.propertyId?._id
+        }
+      })
+
+      console.log(res)
+      if(res?.status == 200){
+        setFeedbacks(res?.data?.data)
+      }
+    } catch(err){
+      console.log(err)
+      toast.error(err?.response?.data?.message || err?.message)
+    }
+  }
   const bookFlat = () => {
     navigate(`/seeker/booking/${data?.propertyId?.propertyType}/${data?.propertyId?._id}`,{
       state: {
@@ -160,7 +184,39 @@ export const FlatDetails = () => {
         </div>
 
         {/* Right Sidebar: Contact & Quick Info */}
-        <div className="space-y-3 md:space-y-6">
+        <div className="space-y-3 md:space-y-3">
+
+          {/* feedbacks */}
+          <div className="w-sm md:w-full py-4">
+          <Swiper
+            modules={[Autoplay, Pagination]}
+            spaceBetween={20}          // Space between cards
+            slidesPerView={1}         // Show 1 card at a time (mobile)
+            loop={feedbacks.length > 1}               // Continuous loop
+            autoplay={{
+              delay: 3000,            // 3 seconds per slide
+              disableOnInteraction: false,
+            }}
+            pagination={{ clickable: true }}
+                  
+            className="pb-12"         // Padding for pagination dots
+          >
+            {feedbacks?.map((feedback) => (
+              <SwiperSlide key={feedback?._id}>
+                  <FeedbackCard feedback={feedback} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          
+          {/* Custom CSS to style Swiper dots if needed */}
+          <style>{`
+            .swiper-pagination-bullet-active {
+              background: #2563eb !important; /* blue-600 */
+            }
+          `}
+          </style>
+          </div>
+
           <div className="bg-gray-900 text-white p-6 rounded-md shadow-md sticky top-6">
              <div className="mb-6">
                 <h3 className="text-xl font-bold mb-1">Contact Owner</h3>
@@ -208,6 +264,7 @@ export const FlatDetails = () => {
                 BOOK NOW
              </button>
           </div>
+          
         </div>
       </div>
     </div>
