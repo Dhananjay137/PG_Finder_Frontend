@@ -96,7 +96,7 @@ export const PGDetails = () => {
     })
   }
 
-  if (loading) return <div className="text-center p-20 font-medium text-indigo-600">Loading Property Details...</div>;
+  if (loading) return <div className="text-center p-20 font-medium text-blue-600">Loading Property Details...</div>;
   if (!data) return <div className="text-center p-20">No data found.</div>;
 
   const property = data.propertyId;
@@ -217,7 +217,7 @@ export const PGDetails = () => {
           {/* Rules & Policy */}
           <div className="bg-white p-6 rounded-md border border-gray-100 shadow-sm">
             <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-              <ShieldCheck className="text-indigo-600" /> Stay Rules & Policies
+              <ShieldCheck className="text-blue-600" /> Stay Rules & Policies
             </h3>
             <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-1">
@@ -274,7 +274,7 @@ export const PGDetails = () => {
           </div>
 
           {/* feedbacks */}
-          <div className="w-sm md:w-full py-4 sticky">
+          <div className="w-auto md:w-full py-4 sticky">
           <Swiper
             modules={[Autoplay, Pagination]}
             spaceBetween={20}          // Space between cards
@@ -288,11 +288,14 @@ export const PGDetails = () => {
         
             className="pb-12"         // Padding for pagination dots
           >
-            {feedbacks?.map((feedback) => (
-              <SwiperSlide key={feedback?._id}>
-                <FeedbackCard feedback={feedback} />
-              </SwiperSlide>
-            ))}
+            {feedbacks
+              ?.filter((feedback) => feedback.status === "OK") // Only keep 'OK' feedbacks
+              .map((feedback) => (
+                <SwiperSlide key={feedback?._id}>
+                  <FeedbackCard feedback={feedback} />
+                </SwiperSlide>
+              ))
+            }
           </Swiper>
 
           {/* Custom CSS to style Swiper dots if needed */}
@@ -308,7 +311,7 @@ export const PGDetails = () => {
           <div className="bg-gray-900 text-white p-6 rounded-md shadow-xl sticky top-6">
              <h3 className="text-lg font-bold mb-4">Interested in staying?</h3>
              <div className="space-y-4">
-               <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-md transition-all flex items-center justify-center gap-2">
+               <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-md transition-all flex items-center justify-center gap-2">
                  <Phone size={18}/> Contact Owner
                </button>
                <button 

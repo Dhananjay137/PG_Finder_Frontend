@@ -16,7 +16,7 @@ import { FeedbackCard } from './FeedbackCard';
 
 const InfoCard = ({ icon, label, value }) => (
   <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-md border border-gray-100">
-    <div className="p-2 bg-white rounded-md shadow-sm text-indigo-600">{icon}</div>
+    <div className="p-2 bg-white rounded-md shadow-sm text-blue-600">{icon}</div>
     <div>
       <p className="text-xs text-gray-500 uppercase font-semibold tracking-wider">{label}</p>
       <p className="text-sm font-bold text-gray-800">{value}</p>
@@ -73,7 +73,7 @@ export const FlatDetails = () => {
     })
   }
 
-  if (loading) return <div className="text-center p-20 text-indigo-600 font-medium">Loading Flat Details...</div>;
+  if (loading) return <div className="text-center p-20 text-blue-600 font-medium">Loading Flat Details...</div>;
   if (!data) return <div className="text-center p-20">No data found.</div>;
 
   const property = data?.propertyId;
@@ -100,9 +100,9 @@ export const FlatDetails = () => {
                 {property?.gallery[1]?.label}
              </div>
           </div>
-          <div className="bg-indigo-50 flex flex-col items-center justify-center text-center p-4">
-            <p className="text-indigo-600 font-bold text-xl">+{property?.gallery?.length}</p>
-            <p className="text-indigo-400 text-xs font-semibold">Total Photos</p>
+          <div className="bg-blue-50 flex flex-col items-center justify-center text-center p-4">
+            <p className="text-blue-600 font-bold text-xl">+{property?.gallery?.length}</p>
+            <p className="text-blue-400 text-xs font-semibold">Total Photos</p>
           </div>
         </div>
       </div>
@@ -111,7 +111,7 @@ export const FlatDetails = () => {
       <div className="flex flex-col md:flex-row justify-between items-start gap-4 bg-white p-6 rounded-md border border-gray-100 shadow-sm">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <span className="bg-indigo-600 text-white text-[10px] font-black px-2 py-1 rounded uppercase tracking-tighter">
+            <span className="bg-blue-600 text-white text-[10px] font-black px-2 py-1 rounded uppercase tracking-tighter">
               {data.bhkType} {property?.propertyType}
             </span>
             {property?.isVerified && (
@@ -125,9 +125,9 @@ export const FlatDetails = () => {
             <MapPin size={18} className="text-red-500"/> {property?.houseNo}, {property?.landmarkStreet}, {property?.city}
           </p>
         </div>
-        <div className="bg-gray-50 border border-indigo-100 p-5 rounded-md text-center md:text-right min-w-[220px]">
+        <div className="bg-gray-50 border border-blue-100 p-5 rounded-md text-center md:text-right min-w-[220px]">
           <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-1">Monthly Rent</p>
-          <div className="text-4xl font-black text-indigo-600">₹{data.expectedRent}</div>
+          <div className="text-4xl font-black text-blue-600">₹{data.expectedRent}</div>
           <div className="text-xs font-bold text-gray-500 mt-1">Deposit: ₹{data.securityDeposit}</div>
         </div>
       </div>
@@ -146,25 +146,25 @@ export const FlatDetails = () => {
           </div>
 
           {/* Visit Schedule & Location */}
-          <div className="bg-indigo-50/50 p-6 rounded-md border border-indigo-100 grid md:grid-cols-2 gap-4 md:gap-6">
+          <div className="bg-blue-50/50 p-6 rounded-md border border-blue-100 grid md:grid-cols-2 gap-4 md:gap-6">
             <div>
-              <h4 className="text-sm font-bold text-indigo-900 flex items-center gap-2 md:mb-3">
+              <h4 className="text-sm font-bold text-blue-900 flex items-center gap-2 md:mb-3">
                 <Clock size={18}/> Visit Timings ({property?.visitSchedule?.dayType})
               </h4>
-              <p className="text-2xl font-black text-indigo-600">
+              <p className="text-2xl font-black text-blue-600">
                 {property?.visitSchedule?.startTime} - {property?.visitSchedule?.endTime}
               </p>
               {property?.visitSchedule?.allDayAccess && (
-                <span className="text-[10px] bg-indigo-200 text-indigo-700 px-2 py-0.5 rounded-md font-bold mt-2 inline-block">
+                <span className="text-[10px] bg-blue-200 text-blue-700 px-2 py-0.5 rounded-md font-bold mt-2 inline-block">
                   ALL DAY ACCESS
                 </span>
               )}
             </div>
-            <div className="border-l border-indigo-100 md:pl-6">
-               <h4 className="text-sm font-bold text-indigo-900 flex items-center gap-2 mb-1">Coordinates</h4>
-               <p className="text-xs text-indigo-400 font-mono">LAT: {property?.latitude}</p>
-               <p className="text-xs text-indigo-400 font-mono">LNG: {property?.longitude}</p>
-               <button className="mt-2 text-xs font-bold text-indigo-600 underline">Open in Maps</button>
+            <div className="border-l border-blue-100 md:pl-6">
+               <h4 className="text-sm font-bold text-blue-900 flex items-center gap-2 mb-1">Coordinates</h4>
+               <p className="text-xs text-blue-400 font-mono">LAT: {property?.latitude}</p>
+               <p className="text-xs text-blue-400 font-mono">LNG: {property?.longitude}</p>
+               <button className="mt-2 text-xs font-bold text-blue-600 underline">Open in Maps</button>
             </div>
           </div>
 
@@ -188,7 +188,7 @@ export const FlatDetails = () => {
         <div className="space-y-3 md:space-y-3">
 
           {/* feedbacks */}
-          <div className="w-sm md:w-full py-4">
+          <div className="w-auto md:w-full py-4">
           <Swiper
             modules={[Autoplay, Pagination]}
             spaceBetween={20}          // Space between cards
@@ -202,11 +202,14 @@ export const FlatDetails = () => {
                   
             className="pb-12"         // Padding for pagination dots
           >
-            {feedbacks?.map((feedback) => (
-              <SwiperSlide key={feedback?._id}>
+            {feedbacks
+              ?.filter((feedback) => feedback.status === "OK") // Only keep 'OK' feedbacks
+              .map((feedback) => (
+                <SwiperSlide key={feedback?._id}>
                   <FeedbackCard feedback={feedback} />
-              </SwiperSlide>
-            ))}
+                </SwiperSlide>
+              ))
+            }
           </Swiper>
           
           {/* Custom CSS to style Swiper dots if needed */}
@@ -226,7 +229,7 @@ export const FlatDetails = () => {
              
              <div className="space-y-3 md:space-y-4 mb-8">
                 <a href={`tel:${property?.propertyContact}`} className="flex items-center gap-4 p-3 bg-white/5 rounded-md hover:bg-white/10 transition-colors">
-                   <div className="p-2 bg-indigo-500 rounded-md"><Phone size={18}/></div>
+                   <div className="p-2 bg-blue-500 rounded-md"><Phone size={18}/></div>
                    <div>
                       <p className="text-[10px] text-gray-400 uppercase">Phone</p>
                       <p className="text-sm font-bold">{property?.propertyContact}</p>
@@ -248,7 +251,7 @@ export const FlatDetails = () => {
                 </div>
                 <div className="flex justify-between text-xs border-b border-white/10 pb-2">
                    <span className="text-gray-400">Preferred Tenant</span>
-                   <span className="font-bold text-indigo-400">{data.preferredTenant}</span>
+                   <span className="font-bold text-blue-400">{data.preferredTenant}</span>
                 </div>
                 <div className="flex justify-between text-xs">
                    <span className="text-gray-400">Negotiable</span>
@@ -259,7 +262,7 @@ export const FlatDetails = () => {
              </div>
 
              <button 
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-black py-4 rounded-md mt-8 transition-transform active:scale-95 shadow-lg shadow-indigo-600/30"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-4 rounded-md mt-8 transition-transform active:scale-95 shadow-lg shadow-blue-600/30"
               onClick={bookFlat}
             >
                 BOOK NOW

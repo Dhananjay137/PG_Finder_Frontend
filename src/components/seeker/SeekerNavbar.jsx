@@ -74,7 +74,7 @@ export const SeekerNavbar = () => {
   ]
 
   const profileTabs = [
-    { name: 'Details', path: '/seeker/profile', icon: <User size={16} /> },
+    { name: 'Profile', path: '/seeker/profile', icon: <User size={16} /> },
     { name: 'Booking Doc', path: '/seeker/bookingDoc', icon: <Dock size={16} /> },
     { name: 'Report', path: '/seeker/reports', icon: <MessageSquareWarning size={16} /> },
     { 

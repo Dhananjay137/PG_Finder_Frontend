@@ -36,6 +36,7 @@ import { BookingDocumentForm } from "../components/seeker/BookingDocumentForm"
 import { BookingDocument } from "../components/seeker/BookingDocument"
 import { MainBookingForm } from "../components/seeker/MainBookingForm"
 import { BookingDetails } from "../components/seeker/BookingDetails"
+import { ReportFeedbackForm } from "../components/utils/ReportFeedbackForm"
  
 const router = createBrowserRouter([
   {path:"/", element:<Login />},
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
   {path: "/aboutUs", element: <AboutUs/>},
   {path: "/password-forget", element: <ForgetPassword/>},
   {path: "/password-reset/:token", element: <PasswordReset/>},
+  {path: '/report-feedback/:feedbackID', element:<ReportFeedbackForm/>},
 
   {path:"/seeker", element: 
     <ProtectedRoutes userRoles={['SEEKER']}>

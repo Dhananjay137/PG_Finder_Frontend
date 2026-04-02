@@ -29,7 +29,7 @@ export const FeedbackForm = ({ bookingID, propertyID }) => {
       if (response.status === 200 || response.status === 201) {
         setIsSubmitted(true)
         toast.success('Feedback submitted successfully !')
-        navigate('/seeker/home')
+        navigate(-1)
       }
     } catch (err) {
       console.error("Feedback error:", err)
