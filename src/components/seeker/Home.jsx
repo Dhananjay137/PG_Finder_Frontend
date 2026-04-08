@@ -1,69 +1,107 @@
 import { Search } from 'lucide-react';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Property } from '../owner/Property';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import api from '../../api/axiosInstance';
 
 export const Home = () => {
-  // 1. Create the reference
   const detailsRef = useRef(null);
-  const [city, setCity] = useState('')
-  const [properties, setProperties] = useState([])
+  // Default city set to Surat
+  const [city, setCity] = useState('Surat');
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  // 2. Function to handle the scroll
-  const handleSearch = async() => {
-    detailsRef.current?.scrollIntoView({ behavior: 'smooth' });
-    try{
-      const res = await api.get(`/property/properties`,{
-        params: {
-          city: city,
-          // status: 'APPROVED'
+  // Load properties on initial mount (for Surat)
+  useEffect(() => {
+    fetchProperties(true);
+  }, []);
+
+  const fetchProperties = async (isInitial = false) => {
+    setLoading(true);
+    try {
+      const res = await api.get(`/property/properties`, {
+        params: { city: city }
+      });
+      
+      if (res?.status === 200) {
+        setProperties(res?.data?.data);
+        // Only scroll if the user manually clicked search
+        if (!isInitial) {
+          detailsRef.current?.scrollIntoView({ behavior: 'smooth' });
         }
-      })
-      console.log(res)
-      if(res?.status == 200){
-        setProperties(res?.data?.data)
       }
-
-    } catch(err){
-      console.log(err)
-      toast.error(err?.message)
+    } catch (err) {
+      console.error(err);
+      toast.error(err?.response?.data?.message || "Failed to fetch properties");
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleSearch = () => {
+    if (!city.trim()) {
+      toast.warn("Please enter a city name");
+      return;
+    }
+    fetchProperties();
   };
 
   return (
     <>
       {/* Hero Section */}
-      <div className='h-screen flex flex-col justify-center items-center bg-gray-50'>
-        <h2 className='text-3xl font-bold mb-6 text-gray-700'>Find Your Desired Place</h2>
+      <div className='h-[80vh] flex flex-col justify-center items-center bg-gradient-to-b from-blue-50 to-white px-4'>
+        <h2 className='text-4xl md:text-5xl font-extrabold mb-8 text-gray-800 text-center'>
+          Find Your <span className="text-blue-600">Perfect Stay.</span>
+        </h2>
         
-        <div className='flex items-center w-full max-w-md bg-white border border-gray-300 rounded-lg overflow-hidden shadow-sm'>
+        <div className='flex items-center w-full max-w-lg bg-white border-2 border-blue-100 rounded-full overflow-hidden shadow-lg focus-within:border-blue-400 transition-all'>
           <input 
             type="search" 
-            placeholder="Search by City..."
+            placeholder="Search by City (e.g. Surat)..."
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            className='grow px-4 py-2 outline-none' 
+            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+            className='grow px-6 py-4 outline-none text-lg text-gray-700' 
           />
-          {/* 3. Attach click handler to the button */}
           <button 
             onClick={handleSearch} 
-            className='bg-blue-600 text-white p-3 hover:bg-blue-700 transition-colors'
+            disabled={loading}
+            className='bg-blue-600 text-white p-5 hover:bg-blue-700 transition-all disabled:bg-blue-300'
           >
-            <Search size={18} />
+            <Search size={24} />
           </button>
         </div>
+        <p className="mt-4 text-gray-500">Currently showing properties in <span className="font-semibold text-blue-600">{city || 'your area'}</span></p>
       </div>
 
-      {/* 4. Attach the ref to the target section */}
-      <div ref={detailsRef} className='min-h-screen p-0 md:p-10 border-t border-gray-200'>
-        <h3 className='text-2xl font-bold text-gray-700 mt-12'>Property Details</h3>
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mt-8'>
-           {properties?.map((property) => { return(
-            <Property key={property._id} property={property}/>
-           )})}
+      {/* Results Section */}
+      <div ref={detailsRef} className='min-h-screen bg-gray-50 px-6 py-12 md:px-16 border-t border-gray-200'>
+        <div className="flex justify-between items-center mb-10">
+          <h3 className='text-3xl font-bold text-gray-800'>
+            Available <span className="text-blue-600">Properties</span>
+          </h3>
+          <span className="bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-semibold">
+            {properties.length} Results Found
+          </span>
         </div>
+
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          </div>
+        ) : properties.length > 0 ? (
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8'>
+            {properties.map((property) => (
+              <div key={property._id} className="transform hover:scale-[1.02] transition-transform duration-300">
+                <Property property={property} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-20 bg-white rounded-2xl shadow-sm border border-dashed border-gray-300">
+            <p className="text-xl text-gray-500 italic">No properties found in "{city}". Try searching for another city!</p>
+          </div>
+        )}
       </div>
     </>
   );
