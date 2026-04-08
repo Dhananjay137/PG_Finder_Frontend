@@ -28,6 +28,7 @@ export const Property = ({ property, wishID, savedNote }) => {
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('user')))
+    console.log(JSON.parse(localStorage.getItem('user')))
   },[])
 
   // Use the first image from gallery as cover
@@ -156,7 +157,7 @@ export const Property = ({ property, wishID, savedNote }) => {
           <div className="flex flex-col gap-2 mt-4 mb-2">
             
             {/* Standard for all Pending Properties */}
-            {type=='OWNER' && status === 'PENDING' && (
+            {user?.role=='OWNER' && status === 'PENDING' && (
               <button 
             onClick={() => handleNavigate(_id, propertyType)}
             className="w-full bg-amber-600 hover:bg-amber-700 text-white text-[11px] font-bold py-2.5 rounded-lg transition-colors tracking-wider">
@@ -166,7 +167,7 @@ export const Property = ({ property, wishID, savedNote }) => {
             
 
             {/* Only for APPROVED PGs */}
-            {type=='OWNER' && status === 'APPROVED' && propertyType === 'PG' && (
+            {user?.role=='OWNER' && status === 'APPROVED' && propertyType === 'PG' && (
               <button 
               onClick={() => navigate(`/owner/add-room/pg/${_id}`)}
               className="w-full bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 text-[11px] font-bold py-2.5 rounded-lg transition-colors tracking-wider uppercase">

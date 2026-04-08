@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { 
   Users, Calendar, Clock, ShieldCheck, Utensils, 
   CheckCircle2, XCircle, Info, Home, MapPin, Phone, Mail, BadgeCheck,
-  Bed, Wallet, DoorOpen
+  Bed, Wallet, DoorOpen,
+  Map
 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -13,6 +14,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import { MapComponent } from './MapComponent';
 
 // Helper component for Badges
 const Badge = ({ icon, label, color }) => (
@@ -149,6 +151,9 @@ export const PGDetails = () => {
           <Badge icon={<Home size={16}/>} label={`For: ${data?.preferredGuest}`} color="bg-purple-100 text-purple-700" />
           <Badge icon={<Calendar size={16}/>} label={`Moving from: ${new Date(data?.availableFrom).toLocaleDateString()}`} color="bg-green-100 text-green-700" />
           <Badge icon={<Clock size={16}/>} label={`Visit: ${property?.visitSchedule?.startTime} - ${property?.visitSchedule?.endTime}`} color="bg-gray-100 text-gray-700" />
+          <div onClick={() => navigate('/map',{state: {propertyLocation: property?.location, propertyName: property.propertyName}})} className='cursor-pointer'>
+            <Badge icon={<Map size={16}/>} label={'open map'} color="bg-yellow-100 text-yellow-700" />
+          </div>
         </div>
       </div>
 

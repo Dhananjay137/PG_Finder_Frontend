@@ -71,8 +71,8 @@ export const AddRoomForm = () => {
 
             <div>
               <label className='block text-sm font-medium'>Deposit Amount</label>
-              <input type='number' {...register('depositAmount', { required: 'Monthly Rent is required' })} className='border border-gray-300 w-full rounded-md p-2 mt-1 outline-blue-500' />
-              {errors.depositAmount && <p className='text-red-500 text-sm mt-1'>{errors.depositAmount.message}</p>}
+              <input type='number' {...register('securityDeposit', { required: 'Monthly Rent is required' })} className='border border-gray-300 w-full rounded-md p-2 mt-1 outline-blue-500' />
+              {errors.securityDeposit && <p className='text-red-500 text-sm mt-1'>{errors.securityDeposit.message}</p>}
             </div>
 
             <div>

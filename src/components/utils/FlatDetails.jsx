@@ -162,9 +162,9 @@ export const FlatDetails = () => {
             </div>
             <div className="border-l border-blue-100 md:pl-6">
                <h4 className="text-sm font-bold text-blue-900 flex items-center gap-2 mb-1">Coordinates</h4>
-               <p className="text-xs text-blue-400 font-mono">LAT: {property?.latitude}</p>
-               <p className="text-xs text-blue-400 font-mono">LNG: {property?.longitude}</p>
-               <button className="mt-2 text-xs font-bold text-blue-600 underline">Open in Maps</button>
+               <p className="text-xs text-blue-400 font-mono">LAT: {property?.location?.coordinates[1]}</p>
+               <p className="text-xs text-blue-400 font-mono">LNG: {property?.location?.coordinates[0]}</p>
+               <button onClick={() => navigate('/map',{state: {propertyLocation: property?.location, propertyName: property?.propertyName}})} className="mt-2 text-xs font-bold text-blue-600 underline">Open in Maps</button>
             </div>
           </div>
 

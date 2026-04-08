@@ -53,8 +53,7 @@ export const AddProperty = () => {
   formData.append('houseNo', data.houseNo);
   formData.append('landmarkStreet', data.landmark);
   formData.append('city', data.city);
-  formData.append('latitude', data.latitude);
-  formData.append('longitude', data.longitude);
+  formData.append('address',data.address)
   formData.append('propertyContact', data.contact);
   formData.append('propertyEmail', data.email);
   
@@ -73,6 +72,7 @@ export const AddProperty = () => {
 
   try {
     // IMPORTANT: Use multipart/form-data for files
+    console.log(Object.fromEntries(formData))
     const res = await api.post('/property/property', formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
@@ -145,13 +145,9 @@ export const AddProperty = () => {
               {errors.city && <p className='text-xs text-red-500'>{errors.city.message}</p>}
             </div>
             <div>
-              <label className='block text-sm font-medium'>Location</label>
-              <div className='grid grid-cols-2 gap-2'>
-                <input type='text' {...register('latitude', { required: 'Location is required' })} className='border border-gray-300 w-full rounded-md p-2 mt-1 outline-blue-500' />
-                <input type='text' {...register('longitude', { required: 'Location is required' })} className='border border-gray-300 w-full rounded-md p-2 mt-1 outline-blue-500' />
-                {errors.latitude && errors.longitude && <p className='text-xs text-red-500'>{errors.latitude.message}</p>}
-              </div>
-              
+              <label className='block text-sm font-medium'>Address</label>
+              <textarea {...register('address', {required: 'address is required'})} className='border border-gray-300 w-full rounded-md p-2 mt-1 outline-blue-500' ></textarea>
+              {errors?.address && <p className='text-xs text-red-500'>{errors?.address.message}</p>}
             </div>
           </div>
 
