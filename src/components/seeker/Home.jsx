@@ -1,4 +1,4 @@
-import { Search } from 'lucide-react';
+import { Search, Filter } from 'lucide-react';
 import React, { useRef, useState, useEffect } from 'react';
 import { Property } from '../owner/Property';
 import { toast } from 'react-toastify';
@@ -6,12 +6,14 @@ import api from '../../api/axiosInstance';
 
 export const Home = () => {
   const detailsRef = useRef(null);
-  // Default city set to Surat
+  
+  // States
   const [city, setCity] = useState('Surat');
+  const [type, setType] = useState(''); // New State for Filter
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Load properties on initial mount (for Surat)
+  // Load properties on initial mount
   useEffect(() => {
     fetchProperties(true);
   }, []);
@@ -20,7 +22,10 @@ export const Home = () => {
     setLoading(true);
     try {
       const res = await api.get(`/property/properties`, {
-        params: { city: city }
+        params: { 
+          city: city,
+          type: type || undefined // Only sends 'PG' or 'FLAT' if selected
+        }
       });
       
       if (res?.status === 200) {
@@ -54,24 +59,45 @@ export const Home = () => {
           Find Your <span className="text-blue-600">Perfect Stay.</span>
         </h2>
         
-        <div className='flex items-center w-full max-w-lg bg-white border-2 border-blue-100 rounded-full overflow-hidden shadow-lg focus-within:border-blue-400 transition-all'>
+        {/* Search & Filter Bar */}
+        <div className='flex flex-col md:flex-row items-center w-full max-w-2xl bg-white border-2 border-blue-100 rounded-2xl md:rounded-full overflow-hidden shadow-lg focus-within:border-blue-400 transition-all'>
+          {/* City Input */}
           <input 
             type="search" 
-            placeholder="Search by City (e.g. Surat)..."
+            placeholder="Search City..."
             value={city}
             onChange={(e) => setCity(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-            className='grow px-6 py-4 outline-none text-lg text-gray-700' 
+            className='grow px-6 py-4 outline-none text-lg text-gray-700 w-full' 
           />
+
+          {/* Type Filter Dropdown */}
+          <div className="flex items-center border-t md:border-t-0 md:border-l-2 border-gray-100 px-4 py-3 bg-gray-50 md:bg-transparent w-full md:w-auto">
+            <Filter size={18} className="text-gray-400 mr-2" />
+            <select 
+              value={type} 
+              onChange={(e) => setType(e.target.value)}
+              className="outline-none bg-transparent text-gray-600 font-semibold cursor-pointer w-full min-w-[100px]"
+            >
+              <option value="BOTH">All Types</option>
+              <option value="PG">PG</option>
+              <option value="FLAT">Flat</option>
+            </select>
+          </div>
+
+          {/* Search Button */}
           <button 
             onClick={handleSearch} 
             disabled={loading}
-            className='bg-blue-600 text-white p-5 hover:bg-blue-700 transition-all disabled:bg-blue-300'
+            className='bg-blue-600 text-white p-5 hover:bg-blue-700 transition-all disabled:bg-blue-300 w-full md:w-auto flex justify-center'
           >
             <Search size={24} />
           </button>
         </div>
-        <p className="mt-4 text-gray-500">Currently showing properties in <span className="font-semibold text-blue-600">{city || 'your area'}</span></p>
+
+        <p className="mt-4 text-gray-500">
+          Showing <span className="font-semibold text-blue-600">{type || 'all types'}</span> in <span className="font-semibold text-blue-600">{city || 'your area'}</span>
+        </p>
       </div>
 
       {/* Results Section */}
@@ -99,7 +125,9 @@ export const Home = () => {
           </div>
         ) : (
           <div className="text-center py-20 bg-white rounded-2xl shadow-sm border border-dashed border-gray-300">
-            <p className="text-xl text-gray-500 italic">No properties found in "{city}". Try searching for another city!</p>
+            <p className="text-xl text-gray-500 italic">
+              No {type} found in "{city}". Try searching for another city or type!
+            </p>
           </div>
         )}
       </div>
