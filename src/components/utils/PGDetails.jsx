@@ -50,7 +50,7 @@ export const PGDetails = () => {
       const res = await api.get(`/pg/pg/${id}`);
       if (res.status === 200) {
         setData(res?.data?.data);
-        console.log(res)
+        //console.log(res)
       }
     } catch (err) {
       toast.error(err?.response?.data?.message || err.message);

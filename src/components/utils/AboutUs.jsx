@@ -7,7 +7,7 @@ export const AboutUs = () => {
       {/* Header Section */}
       <header className="text-center mb-16">
         <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
-          <span className="text-blue-600">About PG Finder</span> <span className="text-gray-800">System</span>
+          <span className="text-gray-800">About PG Finder</span> <span className="text-blue-600">System</span>
         </h1>
         <p className="text-xl text-gray-500">Simplifying your search for the perfect stay.</p>
       </header>

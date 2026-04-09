@@ -48,11 +48,11 @@ export const Login = () => {
         const role = res?.data?.role
 
         switch(role){
-          case "SEEKER": navigate("/seeker")
+          case "SEEKER": navigate("/seeker/home")
           break;
-          case "OWNER": navigate("/owner") 
+          case "OWNER": navigate("/owner/dashboard") 
           break;
-          case "ADMIN": navigate("/admin")
+          case "ADMIN": navigate("/admin/dashboard")
           break;
         }
       }

@@ -18,7 +18,6 @@ export const Reports = () => {
       const res = await api.get('/feedbackReport/feedbackReports')
       
       if (res?.status === 200) {
-        // Assuming the data is in res.data.data based on your console.log
         setReports(res?.data?.data || [])
       }
     } catch (err) {

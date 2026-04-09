@@ -54,13 +54,13 @@ export const Home = () => {
   return (
     <>
       {/* Hero Section */}
-      <div className='h-[80vh] flex flex-col justify-center items-center bg-gradient-to-b from-blue-50 to-white px-4'>
+      <div className='h-[80vh] flex flex-col justify-center items-center bg-gradient-to-b from-blue-50 to-white px-2 md:px-4'>
         <h2 className='text-4xl md:text-5xl font-extrabold mb-8 text-gray-800 text-center'>
           Find Your <span className="text-blue-600">Perfect Stay.</span>
         </h2>
         
         {/* Search & Filter Bar */}
-        <div className='flex flex-col md:flex-row items-center w-full max-w-2xl bg-white border-2 border-blue-100 rounded-2xl md:rounded-full overflow-hidden shadow-lg focus-within:border-blue-400 transition-all'>
+        <div className='flex flex-col md:flex-row items-center w-full max-w-2xl bg-white border-2 border-blue-100 rounded-md md:rounded-md overflow-hidden shadow-lg focus-within:border-blue-400 transition-all'>
           {/* City Input */}
           <input 
             type="search" 
@@ -101,12 +101,12 @@ export const Home = () => {
       </div>
 
       {/* Results Section */}
-      <div ref={detailsRef} className='min-h-screen bg-gray-50 px-6 py-12 md:px-16 border-t border-gray-200'>
-        <div className="flex justify-between items-center mb-10">
+      <div ref={detailsRef} className='min-h-screen bg-gray-50 px-2 py-12 md:px-16 border-t border-gray-200'>
+        <div className="flex flex-col gap-2 md:flex-row justify-between items-center mb-10">
           <h3 className='text-3xl font-bold text-gray-800'>
             Available <span className="text-blue-600">Properties</span>
           </h3>
-          <span className="bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-semibold">
+          <span className="bg-blue-100 text-blue-700 px-4 py-1 rounded-md text-sm font-semibold">
             {properties.length} Results Found
           </span>
         </div>

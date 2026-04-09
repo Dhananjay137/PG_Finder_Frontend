@@ -1,10 +1,12 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 export const ForgetPassword = () => {
   const [serverMessage, setServerMessage] = useState({ type: '', text: '' });
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate()
 
   const {
     register,
@@ -92,9 +94,9 @@ export const ForgetPassword = () => {
         </form>
 
         <div className="mt-6 text-center">
-          <a href="/" className="text-sm font-medium text-blue-600 hover:underline">
-            ← Back to Login
-          </a>
+          <button onClick={() => navigate(-1)} className="text-sm font-medium text-blue-600 hover:underline">
+            ← Back to Page
+          </button>
         </div>
       </div>
     </div>

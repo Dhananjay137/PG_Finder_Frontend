@@ -21,7 +21,7 @@ export const Properties = () => {
       })
       console.log(res.data.data)
       if(res?.status == 200){
-        toast.success(res?.data?.message)
+        //toast.success(res?.data?.message)
         setProperties(res?.data?.data)
       }
 

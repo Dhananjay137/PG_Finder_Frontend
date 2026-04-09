@@ -51,7 +51,7 @@ export const VerificationDocumentList = () => {
       const res = await api.get("/bookingDocument/bookingDocuments");
       //console.log(res)
       if (res?.status == 200) {
-        toast.success(res?.data?.message);
+        //toast.success(res?.data?.message);
         setDocuments(res?.data?.data);
       }
     } catch (err) {

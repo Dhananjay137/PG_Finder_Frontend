@@ -63,7 +63,7 @@ export const UserList = () => {
       //console.log(res?.data?.data)
       if (res.status == 200) {
         setUsers(res?.data?.data);
-        toast.success(res?.data?.message);
+        //toast.success(res?.data?.message);
       }
     } catch (err) {
       console.log(err)

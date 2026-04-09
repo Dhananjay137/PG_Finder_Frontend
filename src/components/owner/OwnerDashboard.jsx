@@ -9,7 +9,6 @@ export const OwnerDashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        // Replace with your actual API endpoint
         const response = await api.get('/dashboard/dashboard-owner');
         setStats(response.data.data);
       } catch (err) {

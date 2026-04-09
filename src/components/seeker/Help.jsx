@@ -18,7 +18,7 @@ export const Help = () => {
         <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
           How can we <span className="text-blue-600">help you?</span>
         </h1>
-        <p className="text-lg text-gray-500">Browse our frequently asked questions or get in touch with our team.</p>
+        <p className="text-lg text-gray-500">get in touch with our team.</p>
       </header>
 
       {/* FAQ Section */}

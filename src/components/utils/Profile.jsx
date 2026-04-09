@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { UpdateProfileForm } from './UpdateProfileForm';
+import { useNavigate } from 'react-router-dom';
 
 export const Profile = () => {
   const [decodedUser, setDecodedUser] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [token, setToken] = useState('')
+  const navigate = useNavigate()
 
   useEffect(() => {
     const savedUser = JSON.parse(localStorage.getItem('user'));
@@ -20,12 +22,12 @@ export const Profile = () => {
     setIsEditing(true); 
   };
 
-  const handleDelete = () => {
-    const confirmDelete = window.confirm("Are you sure you want to delete your account? This cannot be undone.");
-    if (confirmDelete) {
-      console.log("Deleting account:", decodedUser?._id);
-    }
-  };
+  // const handleDelete = () => {
+  //   const confirmDelete = window.confirm("Are you sure you want to delete your account? This cannot be undone.");
+  //   if (confirmDelete) {
+  //     console.log("Deleting account:", decodedUser?._id);
+  //   }
+  // };
 
   if (isEditing) {
     return (
@@ -45,8 +47,8 @@ export const Profile = () => {
   if (!decodedUser) return <div className="p-4 animate-pulse bg-white/20 rounded-2xl w-72 h-80"></div>;
 
   return (
-    <div className='bg-gray-50 h-screen flex items-center justify-center p-4'>
-      <div className="md:w-2xl w-full p-6 rounded-md bg-white/80 backdrop-blur-2xl border border-white/40 ring-1 ring-black/5 text-gray-800 shadow-2xl">
+    <div className='bg-gray-50 md:h-screen flex md:items-center justify-center py-4 md:p-4'>
+      <div className="md:w-2xl w-full p-6 rounded-md bg-white/80 backdrop-blur-2xl border border-white/40 ring-1 ring-black/5 text-gray-800 shadow-md">
         
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-6">
@@ -91,13 +93,13 @@ export const Profile = () => {
           </button>
 
           <button 
-            onClick={handleDelete}
-            className="flex-1 py-3 px-4 rounded-md bg-red-50 hover:bg-red-100 border border-red-200 text-red-600 font-bold text-sm transition-all duration-300 active:scale-95 flex items-center justify-center gap-2"
+            onClick={() => navigate('/password-forget')}
+            className="flex-1 py-3 px-4 rounded-md bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-600 font-bold text-sm transition-all duration-300 active:scale-95 flex items-center justify-center gap-2"
           >
             <svg xmlns="http://www.w3.org" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
             </svg>
-            Delete Account
+            Change Password
           </button>
         </div>
       </div>

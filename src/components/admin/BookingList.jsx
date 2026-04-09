@@ -15,7 +15,7 @@ export const BookingList = () => {
     try{
       const res = await api.get('/booking/bookings')
       if(res?.status == 200){
-        toast.success(res?.data?.message)
+        // toast.success(res?.data?.message)
         setBookings(res?.data?.data)
       }
       //console.log(res)

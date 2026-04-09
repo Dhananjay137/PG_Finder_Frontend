@@ -16,7 +16,6 @@ export const AdminSidebar = () => {
     { name: 'Doc Verification', path: '/admin/document-verification', icon: <CircleChevronRight size={20} /> },
     { name: 'Feedback', path: '/admin/feedbacks', icon: <MessageCircle size={20} /> },
     { name: 'Feedback Report', path: '/admin/feedback-reports', icon: <FileText size={20} /> },
-    { name: 'Settings', path: '/admin/settings', icon: <Settings size={20} /> },
   ]
 
   return (
