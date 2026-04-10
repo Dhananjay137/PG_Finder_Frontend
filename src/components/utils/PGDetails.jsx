@@ -15,6 +15,7 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { MapComponent } from './MapComponent';
+import { ImageLightbox } from './ImageLIghtbox';
 
 // Helper component for Badges
 const Badge = ({ icon, label, color }) => (
@@ -37,6 +38,7 @@ export const PGDetails = () => {
   const [feedbacks, setFeedbacks] = useState([])
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
+  const [lightbox, setLightbox] = useState({ isOpen: false, index: 0 });
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -105,29 +107,43 @@ export const PGDetails = () => {
 
   return (
     <div className="max-w-5xl mx-auto p-0 md:p-6 space-y-6 bg-gray-50/50">
+
+      <ImageLightbox 
+        isOpen={lightbox.isOpen} 
+        images={property?.gallery} 
+        startIndex={lightbox.index}
+        onClose={() => setLightbox({ ...lightbox, isOpen: false })} 
+      />
       
       {/* 1. Image Gallery Header */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 h-64 md:h-96 rounded-md overflow-hidden shadow-md">
-        <div className="relative h-full bg-gray-200">
+        {/* Main Image */}
+        <div 
+          className="relative h-full bg-gray-200 cursor-pointer overflow-hidden"
+          onClick={() => setLightbox({ isOpen: true, index: 0 })}
+        >
           <img 
-            src={property?.gallery[0]?.fileUrl || 'https://via.placeholder.com'} 
-            className="w-full h-full object-cover" 
+            src={property?.gallery[0]?.fileUrl} 
+            className="w-full h-full object-cover hover:scale-105 transition-all" 
             alt="Main" 
           />
-          <div className="absolute top-4 left-4 flex gap-2">
-            {property?.isVerified && (
-              <span className="bg-green-600 text-white px-3 py-1 rounded-md text-xs flex items-center gap-1 shadow-lg">
-                <BadgeCheck size={14}/> Verified
-              </span>
-            )}
-          </div>
         </div>
+
+        {/* Small Images */}
         <div className="hidden md:grid grid-rows-2 gap-2 h-full">
-            <img src={property?.gallery[1]?.fileUrl || 'https://via.placeholder.com'} className="w-full h-full object-cover bg-gray-200" alt="Gallery 1" />
-            <div className="relative">
-                <img src={property?.gallery[0]?.fileUrl || 'https://via.placeholder.com'} className="w-full h-full object-cover blur-[2px] bg-gray-200" alt="Gallery 2" />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/40 text-white font-bold">
-                    +{property?.gallery?.length || 0} Photos
+            <img 
+              src={property?.gallery[1]?.fileUrl} 
+              className="w-full h-full object-cover bg-gray-200 cursor-pointer" 
+              onClick={() => setLightbox({ isOpen: true, index: 1 })}
+              alt="Gallery 1" 
+            />
+            <div 
+              className="relative cursor-pointer"
+              onClick={() => setLightbox({ isOpen: true, index: 2 })}
+            >
+                <img src={property?.gallery[2]?.fileUrl} className="w-full h-full object-cover blur-[1px]" alt="Gallery 2" />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40 text-white font-bold text-xl">
+                    +{property?.gallery?.length - 2} Photos
                 </div>
             </div>
         </div>

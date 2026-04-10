@@ -13,6 +13,7 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { FeedbackCard } from './FeedbackCard';
+import { ImageLightbox } from './ImageLIghtbox';
 
 const InfoCard = ({ icon, label, value }) => (
   <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-md border border-gray-100">
@@ -29,6 +30,7 @@ export const FlatDetails = () => {
   const [data, setData] = useState(null);
   const [feedbacks, setFeedbacks] = useState([])
   const [loading, setLoading] = useState(true);
+  const [lightbox, setLightbox] = useState({ isOpen: false, index: 0 });
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -80,30 +82,44 @@ export const FlatDetails = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-2 md:p-8 space-y-4 md:space-y-8">
+
+      <ImageLightbox
+        isOpen={lightbox.isOpen} 
+        images={property?.gallery} 
+        startIndex={lightbox.index}
+        onClose={() => setLightbox({ ...lightbox, isOpen: false })} 
+      />
       
-      {/* 1. Image Gallery Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 h-[300px] md:h-[450px] rounded-md overflow-hidden shadow-md">
-        <div className="md:col-span-2 relative h-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 h-64 md:h-96 rounded-md overflow-hidden shadow-md">
+        {/* Main Image */}
+        <div 
+          className="relative h-full bg-gray-200 cursor-pointer overflow-hidden"
+          onClick={() => setLightbox({ isOpen: true, index: 0 })}
+        >
           <img 
             src={property?.gallery[0]?.fileUrl} 
-            className="w-full h-full object-cover" 
-            alt={property?.gallery[0]?.label} 
+            className="w-full h-full object-cover hover:scale-105 transition-all" 
+            alt="Main" 
           />
-          <div className="absolute bottom-4 left-4 bg-black/60 text-white px-3 py-1 rounded-md text-xs backdrop-blur-sm">
-            {property?.gallery[0]?.label}
-          </div>
         </div>
-        <div className="hidden md:grid grid-rows-2 gap-3 h-full">
-          <div className="relative">
-             <img src={property?.gallery[1]?.fileUrl} className="w-full h-full object-cover" alt="Gallery" />
-             <div className="absolute bottom-2 left-2 bg-black/60 text-white px-2 py-1 rounded text-[10px]">
-                {property?.gallery[1]?.label}
-             </div>
-          </div>
-          <div className="bg-blue-50 flex flex-col items-center justify-center text-center p-4">
-            <p className="text-blue-600 font-bold text-xl">+{property?.gallery?.length}</p>
-            <p className="text-blue-400 text-xs font-semibold">Total Photos</p>
-          </div>
+
+        {/* Small Images */}
+        <div className="hidden md:grid grid-rows-2 gap-2 h-full">
+            <img 
+              src={property?.gallery[1]?.fileUrl} 
+              className="w-full h-full object-cover bg-gray-200 cursor-pointer" 
+              onClick={() => setLightbox({ isOpen: true, index: 1 })}
+              alt="Gallery 1" 
+            />
+            <div 
+              className="relative cursor-pointer"
+              onClick={() => setLightbox({ isOpen: true, index: 2 })}
+            >
+                <img src={property?.gallery[2]?.fileUrl} className="w-full h-full object-cover blur-[1px]" alt="Gallery 2" />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40 text-white font-bold text-xl">
+                    +{property?.gallery?.length - 2} Photos
+                </div>
+            </div>
         </div>
       </div>
 
@@ -141,7 +157,7 @@ export const FlatDetails = () => {
             <InfoCard icon={<Square size={20}/>} label="Area" value={`${data.buildUpArea} Sqft`} />
             <InfoCard icon={<Layers size={20}/>} label="Floor" value={`${data.floorNo}/${data.totalFloor}`} />
             <InfoCard icon={<Compass size={20}/>} label="Facing" value={data.facing} />
-            <InfoCard icon={<Building2 size={20}/>} label="Status" value={data.furnishingStatus} />
+            <InfoCard icon={<Building2 size={20}/>} label="Furnish" value={data.furnishingStatus} />
             <InfoCard icon={<Calendar size={20}/>} label="Age" value={`${data.propertyAge} Yrs`} />
           </div>
 
