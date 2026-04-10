@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import api from '../../api/axiosInstance';
 
-export const Property = ({ property, wishID, savedNote }) => {
+export const Property = ({ property, wishID, savedNote, getWishlist }) => {
   let type = ''
   const [user, setUser] = useState(null)
   const [showModal, setShowModal] = useState(false);
@@ -74,6 +74,7 @@ export const Property = ({ property, wishID, savedNote }) => {
       console.log(res)
 
       if(res?.status == 200){
+        getWishlist()
         toast.success(res?.data?.message)
       }
 

@@ -29,7 +29,7 @@ export const Wishlist = () => {
       <h2 className='font-black text-2xl text-gray-700'>Wishlist</h2>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mt-8'>
       {properties?.map((property, i) => { return(
-        <Property key={property._id} property={property.propertyID} wishID={property._id} savedNote={property.note} />
+        <Property key={property._id} property={property.propertyID} wishID={property._id} savedNote={property.note} getWishlist={getWishlist} />
       )})}
       </div>
     </div>
