@@ -20,7 +20,7 @@ export const PGDetailForm = () => {
       }
 
     } catch(err){
-      console.log(err)
+      //console.log(err)
       toast.error(err?.message)
     }
   }

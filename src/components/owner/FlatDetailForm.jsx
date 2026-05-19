@@ -14,7 +14,7 @@ export const FlatDetailForm = () => {
   const aminities = ["GYM","NON_VEG_ALLOWED","LIFT","INTERCOM","SWIMMING_POOL","CLUB_HOUSE","SERVANT_ROOM","PIPED_GAS","PARK","SHOPPING_CENTER","RESERVED_PARKING","POWER_BACKUP","CCTV_SECURITY","VISITOR_PARKING", "FIRE_SAFETY"]
 
   const submitHandler = async(data) => {
-    console.log(data)
+    //console.log(data)
     try {
       const res = await api.post('/flat/flat',{...data, propertyId: id})
 
@@ -23,7 +23,7 @@ export const FlatDetailForm = () => {
       }
 
     } catch(err){
-      console.log(err?.message)
+      //console.log(err?.message)
       toast.error(err?.message)
     }
   }

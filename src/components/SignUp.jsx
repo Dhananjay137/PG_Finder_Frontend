@@ -40,12 +40,12 @@ export const SignUp = () => {
   }
 
   const submitHandler = async (data) => {
-    console.log(data);
+    //console.log(data);
     // navigate("/")
     
     try {
       const res = await axios.post("http://localhost:3000/user/register",data)
-      console.log(res)
+      //console.log(res)
       if(res.status == 201){
         toast.success(res.data.message)
         //console.log('register user: ',res.data.data)

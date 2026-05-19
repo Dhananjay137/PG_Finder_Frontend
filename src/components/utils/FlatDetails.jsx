@@ -41,7 +41,7 @@ export const FlatDetails = () => {
   const getFlatDetails = async () => {
     try {
       const res = await api.get(`/flat/flat/${id}`);
-      console.log(res)
+      //console.log(res)
       if (res?.status === 200) setData(res?.data?.data);
     } catch (err) {
       toast.error(err?.response?.data?.message || err.message);
@@ -57,12 +57,12 @@ export const FlatDetails = () => {
         }
       })
 
-      console.log(res)
+      //console.log(res)
       if(res?.status == 200){
         setFeedbacks(res?.data?.data)
       }
     } catch(err){
-      console.log(err)
+      //console.log(err)
       toast.error(err?.response?.data?.message || err?.message)
     }
   }

@@ -22,7 +22,7 @@ export const Bookings = () => {
         setBookings(res?.data?.data || []);
       }
     } catch (err) {
-      console.log(err?.message);
+      //console.log(err?.message);
       toast.error(err?.response?.data?.message || err?.message);
     } finally {
       setLoading(false);

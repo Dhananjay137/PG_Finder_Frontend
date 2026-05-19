@@ -21,7 +21,7 @@ export const FeedbackReportList = () => {
       }
 
     } catch(err) {
-      console.log(err.message)
+      //console.log(err.message)
       toast.error(err?.response?.data?.message || err.message)
     }
   }
@@ -29,13 +29,13 @@ export const FeedbackReportList = () => {
   const getAllFeedbackReports = async() => {
     try {
       const res = await api.get('/feedbackReport/feedbackReports')
-      console.log(res)
+      //console.log(res)
 
       if(res.status == 200){
         setReports(res?.data?.data)
       }
     } catch(err){
-      console.log(err.message)
+      //console.log(err.message)
       toast.error(err?.response?.data?.message || err.message)
     }
   }

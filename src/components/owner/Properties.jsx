@@ -40,7 +40,7 @@ export const Properties = () => {
         setTotalPages(res?.data?.totalPages || 1)
       }
     } catch (err) {
-      console.log(err)
+      //console.log(err)
       toast.error(err?.message)
     }
   }

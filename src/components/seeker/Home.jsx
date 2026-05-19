@@ -36,7 +36,7 @@ export const Home = () => {
         }
       }
     } catch (err) {
-      console.error(err);
+      //console.error(err);
       toast.error(err?.response?.data?.message || "Failed to fetch properties");
     } finally {
       setLoading(false);

@@ -21,7 +21,7 @@ export const OwnerBookings = () => {
   },[status])
 
   const handleFile = (url, name) => {
-    console.log(url, name);
+    //console.log(url, name);
     setFileUrl(url);
     setFileName(name);
     setDisplayFile(!displayFile);
@@ -38,13 +38,13 @@ export const OwnerBookings = () => {
   const updateBooking = async(id, status) => {
     try {
       const res = await api.put(`/booking/booking/${id}`,{status: status})
-      console.log(res)
+      //console.log(res)
       if(res.status == 201){
         toast.success(res?.data?.message)
         getAllBooking()
       }
     } catch(err) {
-      console.log(err)
+      //console.log(err)
       toast.error(err?.message)
     }
   }
@@ -57,13 +57,13 @@ export const OwnerBookings = () => {
         }
       })
 
-      console.log(res)
+      //console.log(res)
       if(res?.status == 200){
         setBookings(res?.data?.data)
       }
 
     } catch(err) {
-      console.log(err?.response)
+      //console.log(err?.response)
       toast.error(err?.response?.data?.message)
     }
   }

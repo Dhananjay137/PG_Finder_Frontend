@@ -21,7 +21,7 @@ export const BookingList = () => {
       //console.log(res)
 
     } catch(err) {
-      console.log(err)
+      //console.log(err)
       toast.error(err?.message)
     }
   }

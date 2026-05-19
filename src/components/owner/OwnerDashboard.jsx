@@ -10,10 +10,10 @@ export const OwnerDashboard = () => {
     const fetchStats = async () => {
       try {
         const response = await api.get('/dashboard/dashboard-owner');
-        console.log(response)
+        //console.log(response)
         setStats(response.data.data);
       } catch (err) {
-        console.error("Error loading dashboard:", err);
+        //console.error("Error loading dashboard:", err);
       } finally {
         setLoading(false);
       }

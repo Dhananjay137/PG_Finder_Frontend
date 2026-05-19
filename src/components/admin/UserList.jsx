@@ -18,7 +18,7 @@ export const UserList = () => {
   }, []);
 
   const handleFile = (url, name) => {
-    console.log(url, name)
+    //console.log(url, name)
     setFileUrl(url)
     setFileName(name)
     setDisplayFile(!displayFile)
@@ -33,7 +33,7 @@ export const UserList = () => {
       }
 
     } catch(err) {
-      console.log(err)
+      //console.log(err)
       toast.error(err?.message)
     }
   }
@@ -42,7 +42,7 @@ export const UserList = () => {
     try{
       let formData = new FormData()
       formData.append('status',status)
-      console.log([...formData])
+      //console.log([...formData])
 
       const res = await api.put(`user/user/${id}`,formData)
 
@@ -52,7 +52,7 @@ export const UserList = () => {
       }
       
     } catch(err) {
-      console.log(err)
+      //console.log(err)
       toast.error(err?.message)
     }
   }
@@ -66,7 +66,7 @@ export const UserList = () => {
         //toast.success(res?.data?.message);
       }
     } catch (err) {
-      console.log(err)
+      //console.log(err)
       toast.error(err?.message);
     }
   };

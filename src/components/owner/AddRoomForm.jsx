@@ -14,7 +14,7 @@ export const AddRoomForm = () => {
 
   const submitHandler = async(data) => {
     try {
-      console.log(data)
+      //console.log(data)
       const res = await api.post(`/pg/pg/room`,{...data, propertyId: id})
       
       if(res?.status == 201) {
@@ -22,7 +22,7 @@ export const AddRoomForm = () => {
       }
 
     } catch(err) {
-      console.log(err)
+      //console.log(err)
       toast.error(err?.message)
     }
   }

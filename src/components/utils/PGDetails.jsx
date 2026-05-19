@@ -68,12 +68,12 @@ export const PGDetails = () => {
         }
       })
 
-      console.log(res)
+      //console.log(res)
       if(res?.status == 200){
         setFeedbacks(res?.data?.data)
       }
     } catch(err){
-      console.log(err)
+      //console.log(err)
       toast.error(err?.response?.data?.message || err?.message)
     }
   }
@@ -82,14 +82,14 @@ export const PGDetails = () => {
       const res = await api.get(`/pg/pg/rooms/${id}`);
       if (res.status === 200) {
         setRoomData(res?.data?.data);
-        console.log(res)
+        //console.log(res)
       }
     } catch (err) {
       toast.error(err?.message);
     }
   };
   const bookRoom = (id,securityDeposit,roomType) => {
-    console.log(id,securityDeposit,roomType)
+    //console.log(id,securityDeposit,roomType)
     navigate(`/seeker/booking/${data?.propertyId?.propertyType}/${data?.propertyId?._id}`,{
       state: {
         ownerID: data?.propertyId?.ownerId,

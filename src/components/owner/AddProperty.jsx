@@ -72,7 +72,7 @@ export const AddProperty = () => {
 
   try {
     // IMPORTANT: Use multipart/form-data for files
-    console.log(Object.fromEntries(formData))
+    //console.log(Object.fromEntries(formData))
     const res = await api.post('/property/property', formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
@@ -81,7 +81,7 @@ export const AddProperty = () => {
       toast.success(res?.data?.message);
     }
   } catch (err) {
-    console.error(err);
+    //console.error(err);
     toast.error(err.response?.data?.message || "Something went wrong");
   }
 };

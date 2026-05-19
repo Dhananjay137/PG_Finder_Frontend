@@ -32,7 +32,7 @@ export const FeedbackForm = ({ bookingID, propertyID }) => {
         navigate(-1)
       }
     } catch (err) {
-      console.error("Feedback error:", err)
+      //console.error("Feedback error:", err)
       alert("Failed to submit feedback for this booking.")
     } finally {
       setIsSubmitting(false)

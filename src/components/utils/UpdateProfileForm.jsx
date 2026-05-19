@@ -63,7 +63,7 @@ export const UpdateProfileForm = ({user, token, setIsEditing}) => {
       
     } catch (err) {
       toast.error('Update failed')
-      console.log(err)
+      //console.log(err)
     } finally {
       setLoading(false);
     }

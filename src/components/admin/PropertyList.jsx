@@ -42,7 +42,7 @@ export const PropertyList = () => {
         getAllProperties();
       }
     } catch (err) {
-      console.log(err);
+      //console.log(err);
       toast.error(err?.message);
     }
   };
@@ -57,7 +57,7 @@ export const PropertyList = () => {
         setTotalPages(res?.data?.totalPages || 1);
       }
     } catch (err) {
-      console.log(err);
+      //console.log(err);
       toast.error(err?.message);
     }
   };

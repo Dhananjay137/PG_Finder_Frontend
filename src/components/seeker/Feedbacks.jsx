@@ -24,7 +24,7 @@ export const Feedbacks = () => {
         setExistingFeedbacks(res.data.data)
       }
     } catch (err) {
-      console.error("Error fetching feedback history:", err)
+      //console.error("Error fetching feedback history:", err)
     } finally {
       setLoading(false)
     }

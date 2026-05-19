@@ -13,14 +13,14 @@ export const Wishlist = () => {
   const getWishlist = async() => {
     try{
       const res = await api.get('/wishlist/wishes')
-      console.log(res)
+      //console.log(res)
       if(res?.status == 200){
         
         setProperties(res?.data?.data)
       }
 
     } catch(err) {
-      console.log(err?.message)
+      //console.log(err?.message)
       toast.error(err?.message)
     }
   }

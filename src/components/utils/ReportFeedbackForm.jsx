@@ -19,7 +19,7 @@ export const ReportFeedbackForm = () => {
 
   const onSubmit = async (data) => {
     try{
-      console.log('submitting')
+      //console.log('submitting')
       const res = await api.post('/feedbackReport/feedbackReport',{...data, feedbackID: feedbackID})
 
       if(res?.status == 201){
@@ -28,7 +28,7 @@ export const ReportFeedbackForm = () => {
       }
 
     } catch(err) {
-      console.log(err.message)
+      //console.log(err.message)
       toast.error(err?.response?.data?.message || err?.message)
     }
   }

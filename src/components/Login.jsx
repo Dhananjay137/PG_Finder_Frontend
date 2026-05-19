@@ -32,7 +32,7 @@ export const Login = () => {
     
     try{
       const res = await axios.post("http://localhost:3000/user/login",data)
-      console.log(res)
+      //console.log(res)
       if(res.status == 200){
 
         const user = {
@@ -57,7 +57,7 @@ export const Login = () => {
         }
       }
     } catch(err) {
-      console.log(err.response)
+      //console.log(err.response)
       toast.error(err.response.data.message)
     }
   }

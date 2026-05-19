@@ -25,7 +25,7 @@ export const VerificationDocumentList = () => {
     getAllDocument();
   }, []);
   const handleFile = (url, name) => {
-    console.log(url, name);
+    //console.log(url, name);
     setFileUrl(url);
     setFileName(name);
     setDisplayFile(!displayFile);
@@ -42,7 +42,7 @@ export const VerificationDocumentList = () => {
         getAllDocument();
       }
     } catch (err) {
-      console.log(err);
+      //console.log(err);
       toast.error(err?.message);
     }
   };
@@ -55,7 +55,7 @@ export const VerificationDocumentList = () => {
         setDocuments(res?.data?.data);
       }
     } catch (err) {
-      console.log(err);
+      //console.log(err);
       toast.error(err?.message);
     }
   };

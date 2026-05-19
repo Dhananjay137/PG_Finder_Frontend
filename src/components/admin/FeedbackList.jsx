@@ -21,20 +21,20 @@ export const FeedbackList = () => {
       }
 
     } catch(err) {
-      console.log(err.message)
+      //console.log(err.message)
       toast.error(err?.response?.data?.message || err.message)
     }
   }
   const getAllFeedback = async() => {
     try {
       const res = await api.get('/feedback/feedbacks')
-      console.log(res)
+      //console.log(res)
 
       if(res.status == 200){
         setFeedbacks(res?.data?.data)
       }
     } catch(err){
-      console.log(err.message)
+      //console.log(err.message)
       toast.error(err?.response?.data?.message || err.message)
     }
   }

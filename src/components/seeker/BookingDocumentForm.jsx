@@ -10,15 +10,15 @@ export const BookingDocumentForm = ({ previousSetpData,ownerID,propertyID,proper
   const navigate = useNavigate()
 
   const onSubmit = async(data) => {
-    console.log("Form Data:", data);
-    console.log("Selected File:", data.fileUrl[0]); // Access the file object
+    //console.log("Form Data:", data);
+    //.log("Selected File:", data.fileUrl[0]); // Access the file object
     let bookingDocumentID = await addBookingDocument(data)
-    console.log(bookingDocumentID)
-    console.log('propertyType ',propertyType,' propertyID ',propertyID)
+    //console.log(bookingDocumentID)
+    //console.log('propertyType ',propertyType,' propertyID ',propertyID)
 
     let expectedCheckInDate = previousSetpData?.expectedCheckInDate
     let bookingAmount = previousSetpData?.bookingAmount
-    console.log(bookingAmount,expectedCheckInDate,pgRoomPricingID)
+    //console.log(bookingAmount,expectedCheckInDate,pgRoomPricingID)
 
     if(bookingDocumentID){
       let data 
@@ -49,7 +49,7 @@ export const BookingDocumentForm = ({ previousSetpData,ownerID,propertyID,proper
           navigate('/seeker/home')
         }
       } catch(err){
-        console.log(err?.message)
+        //console.log(err?.message)
         toast.success(err?.message)
       }
     }
@@ -74,7 +74,7 @@ export const BookingDocumentForm = ({ previousSetpData,ownerID,propertyID,proper
       } 
 
     } catch(err){
-      console.log(err?.message)
+      //console.log(err?.message)
       toast.error(err?.message)
     }
   }

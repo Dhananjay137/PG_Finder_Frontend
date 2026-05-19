@@ -18,10 +18,11 @@ export const AdminDashboard = () => {
   const getDashboardStatus = async() => {
     try {
       const res = await api.get('/dashboard/dashboard')
-      console.log(res?.data)
+      //console.log(res?.data)
       setData(res?.data?.data)
 
     } catch(err){
+      //
       console.log(err)
       toast.error(err?.message)
     }

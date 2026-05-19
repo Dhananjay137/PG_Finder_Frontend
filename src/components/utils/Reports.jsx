@@ -21,7 +21,7 @@ export const Reports = () => {
         setReports(res?.data?.data || [])
       }
     } catch (err) {
-      console.error(err.message)
+      //console.error(err.message)
       toast.error(err?.response?.data?.message || "Failed to load reports")
     } finally {
       setLoading(false)

@@ -28,7 +28,7 @@ export const Property = ({ property, wishID, savedNote, getWishlist }) => {
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('user')))
-    console.log(JSON.parse(localStorage.getItem('user')))
+    //console.log(JSON.parse(localStorage.getItem('user')))
   },[])
 
   // Use the first image from gallery as cover
@@ -47,7 +47,7 @@ export const Property = ({ property, wishID, savedNote, getWishlist }) => {
     try {
 
       const res = await api.post('/wishlist/wish',{ propertyID, note})
-      console.log(res)
+      //console.log(res)
 
       if(res?.data?.exists && res?.status == 200){
         toast.warn(res?.data?.message)
@@ -63,7 +63,7 @@ export const Property = ({ property, wishID, savedNote, getWishlist }) => {
       }
 
     } catch(err) {
-      console.log(err?.message)
+      //.log(err?.message)
       toast.error(err?.message)
     }
   }
@@ -71,7 +71,7 @@ export const Property = ({ property, wishID, savedNote, getWishlist }) => {
   const removeFromWishlist = async(id) => {
     try{
       const res = await api.delete(`/wishlist/wish/${id}`)
-      console.log(res)
+      //console.log(res)
 
       if(res?.status == 200){
         getWishlist()
@@ -79,7 +79,7 @@ export const Property = ({ property, wishID, savedNote, getWishlist }) => {
       }
 
     }catch(err) {
-      console.log(err)
+      //console.log(err)
       toast.error(err?.message)
     }
   }
