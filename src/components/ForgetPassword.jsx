@@ -22,7 +22,7 @@ export const ForgetPassword = () => {
       // data.email contains the input value
       //console.log("Sending request to backend for:", data.email);
       
-      const res = await axios.post('http://localhost:3000/user/password-forget',{ email: data.email})
+      const res = await axios.post('https://pg-finder-backend-ejx4.onrender.com/user/password-forget',{ email: data.email})
       //console.log(res)
 
       setServerMessage({

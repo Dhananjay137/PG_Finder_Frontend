@@ -44,7 +44,7 @@ export const SignUp = () => {
     // navigate("/")
     
     try {
-      const res = await axios.post("http://localhost:3000/user/register",data)
+      const res = await axios.post("https://pg-finder-backend-ejx4.onrender.com/user/register",data)
       //console.log(res)
       if(res.status == 201){
         toast.success(res.data.message)

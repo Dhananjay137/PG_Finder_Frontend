@@ -31,7 +31,7 @@ export const Login = () => {
     // navigate("/seeker")
     
     try{
-      const res = await axios.post("http://localhost:3000/user/login",data)
+      const res = await axios.post("https://pg-finder-backend-ejx4.onrender.com/user/login",data)
       //console.log(res)
       if(res.status == 200){
 

@@ -53,7 +53,7 @@ export const Bookings = () => {
             It looks like you haven't booked any properties yet. Start exploring now!
           </p>
           <button 
-            onClick={() => navigate('/properties')}
+            onClick={() => navigate('/seeker/home')}
             className="px-8 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all active:scale-95"
           >
             Explore Properties
