@@ -13,7 +13,7 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { FeedbackCard } from './FeedbackCard';
-import { ImageLightbox } from './ImageLIghtbox';
+import { ImageLightbox } from './ImageLightbox';
 
 const InfoCard = ({ icon, label, value }) => (
   <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-md border border-gray-100">
