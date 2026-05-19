@@ -10,6 +10,7 @@ export const OwnerDashboard = () => {
     const fetchStats = async () => {
       try {
         const response = await api.get('/dashboard/dashboard-owner');
+        console.log(response)
         setStats(response.data.data);
       } catch (err) {
         console.error("Error loading dashboard:", err);
@@ -29,9 +30,10 @@ export const OwnerDashboard = () => {
       {/* 1. Main Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <StatCard title="Total Properties" value={stats.totalProperties} color="blue" />
-        <StatCard title="Pending" value={getStatusCount(stats.propertyStatusBreakdown, 'pending')} color="yellow" />
-        <StatCard title="Approved" value={getStatusCount(stats.propertyStatusBreakdown, 'approved')} color="green" />
-        <StatCard title="Bookings" value={stats.bookingStatusBreakdown.length} color="purple" />
+        <StatCard title="Rejected" value={getStatusCount(stats.propertyStatusBreakdown, 'REJECTED')} color="red" />
+        <StatCard title="Approved" value={getStatusCount(stats.propertyStatusBreakdown, 'APPROVED')} color="green" />
+        <StatCard title="Rent Out" value={getStatusCount(stats.propertyStatusBreakdown, 'RENT_OUT')} color="purple" />
+        <StatCard title="Pending" value={getStatusCount(stats.propertyStatusBreakdown, 'PENDING')} color="yellow" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -75,6 +77,7 @@ const StatCard = ({ title, value, color }) => {
     green: "border-green-500 text-green-600",
     yellow: "border-yellow-500 text-yellow-600",
     purple: "border-purple-500 text-purple-600",
+    red: "border-red-500 text-red-600",
   };
   return (
     <div className={`bg-white p-6 rounded-xl shadow-sm border-l-4 ${colors[color]}`}>

@@ -141,7 +141,7 @@ export const SignUp = () => {
                 className="text-blue-600 font-semibold hover:text-blue-800 hover:underline transition-colors" 
                 to="/"
               >
-                Sign Up here
+                Login Here
               </Link>
             </p>
           </div>
