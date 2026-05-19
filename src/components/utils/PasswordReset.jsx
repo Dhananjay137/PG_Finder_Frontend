@@ -24,7 +24,7 @@ export const PasswordReset = () => {
     setServerMessage({ type: '', text: '' });
 
     try {
-      const res = await axios.put('http://localhost:3000/user/password-reset',
+      const res = await axios.put('https://pg-finder-backend-ejx4.onrender.com/user/password-reset',
         {
           newPassword: data.password,
           token: token

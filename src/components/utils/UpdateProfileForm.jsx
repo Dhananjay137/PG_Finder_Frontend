@@ -41,7 +41,7 @@ export const UpdateProfileForm = ({user, token, setIsEditing}) => {
     }
 
     try {
-      const res = await axios.put(`http://localhost:3000/user/user/${user._id}`, formData, {
+      const res = await axios.put(`https://pg-finder-backend-ejx4.onrender.com/user/user/${user._id}`, formData, {
         headers: { 
         'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${token}`
