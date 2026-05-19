@@ -77,7 +77,8 @@ export const BookingDetails = () => {
           
           {/* Booking Info Grid */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 bg-white p-6 rounded-md border border-gray-200 shadow-sm">
-            <InfoBox label="Amount Paid" value={`₹${booking?.bookingAmount}`} subValue="Confirmed" />
+            {booking?.status === 'CONFIRMED' ? <InfoBox label="Amount Paid" value={`₹${booking?.bookingAmount}`} subValue="Confirmed" /> : <InfoBox label="Amount Due" value={`₹${booking?.bookingAmount}`} subValue="Pending" />}
+            
             <InfoBox label="Check-in Date" value={new Date(booking?.expectedCheckInDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })} />
             <InfoBox label="Booked On" value={new Date(booking?.bookingDate).toLocaleDateString('en-IN')} />
             
@@ -161,6 +162,7 @@ const InfoBox = ({ label, value, subValue }) => (
   <div className="flex flex-col">
     <span className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">{label}</span>
     <p className="text-md font-bold text-gray-800">{value}</p>
-    {subValue && <span className="text-[10px] text-green-500 font-bold uppercase">{subValue}</span>}
+    {subValue && subValue === 'Confirmed' && <span className="text-[10px] text-green-500 font-bold uppercase">{subValue}</span>}
+    {subValue && subValue === 'Pending' && <span className="text-[10px] text-yellow-500 font-bold uppercase">{subValue}</span>}
   </div>
 );

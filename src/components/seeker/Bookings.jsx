@@ -85,8 +85,8 @@ export const Bookings = () => {
               {/* Stats Section */}
               <div className="p-5 grid grid-cols-2 gap-4 bg-white text-left">
                 <div className="flex flex-col">
-                  <span className="text-[10px] uppercase font-bold text-gray-400">Amount Paid</span>
-                  <p className="text-lg font-bold text-green-600">₹{booking?.bookingAmount?.toLocaleString()}</p>
+                  <span className="text-[10px] uppercase font-bold text-gray-400">{booking?.status === 'CONFIRMED' ? 'Amount Paind' : 'Amount Due'}</span>
+                  <p className={`text-lg font-bold ${booking.status === "CONFIRMED" ? 'text-green-600' : 'text-yellow-600'}`}>₹{booking?.bookingAmount?.toLocaleString()}</p>
                 </div>
                 
                 <div className="flex flex-col">

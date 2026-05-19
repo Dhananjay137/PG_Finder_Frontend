@@ -76,7 +76,7 @@ const router = createBrowserRouter([
   ,
     children:[
       {path:"dashboard", element:<OwnerDashboard/>},
-      // {path:"aboutUs", element:<AboutUs/>},
+      {path:"aboutUs", element:<AboutUs/>},
       {path:"profile", element:<Profile/>},
       {path:"feedback-reports", element:<Reports/>},
       {path:"add-property", element:<AddProperty/>},

@@ -1,6 +1,7 @@
 import { 
   Frame, LayoutDashboard, LogOut, Building2, FileText, Menu, User, 
-  ChevronDown, PlusCircle, Clock, CheckCircle2, XCircle 
+  ChevronDown, PlusCircle, Clock, CheckCircle2, XCircle, 
+  Info
 } from 'lucide-react'
 import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
@@ -36,6 +37,7 @@ export const OwnerSidebar = () => {
     },
     { name: 'Feedback Report', path: '/owner/feedback-reports', icon: <FileText size={20} /> },
     { name: 'Profile', path: '/owner/profile', icon: <User size={20}/> },
+    { name: 'About Us', path: '/owner/aboutUs', icon: <Info size={20} />}
   ]
 
   const toggleSubMenu = (name) => {
