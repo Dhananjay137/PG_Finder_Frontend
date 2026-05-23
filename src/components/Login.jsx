@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -8,6 +8,7 @@ export const Login = () => {
   // Destructure errors from formState
   const { register, handleSubmit, formState: { errors } } = useForm()
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
 
   const validationSchema = {
     emailValidator: {
@@ -31,6 +32,7 @@ export const Login = () => {
     // navigate("/seeker")
     
     try{
+      setLoading(true)
       const res = await axios.post("https://pg-finder-backend-ejx4.onrender.com/user/login",data)
       //console.log(res)
       if(res.status == 200){
@@ -59,6 +61,8 @@ export const Login = () => {
     } catch(err) {
       //console.log(err.response)
       toast.error(err.response.data.message)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -102,8 +106,9 @@ export const Login = () => {
           <button 
             className='w-full p-2.5 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-md transition-colors mt-4' 
             type='submit'
+            disabled={loading}
           >
-            Login
+            {loading ? 'Loging....': 'Login'}
           </button>
           <div className="pt-4 border-t border-gray-100 text-center">
             <p className="text-sm text-gray-600">

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -8,6 +8,7 @@ export const SignUp = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
 
   const validationSchema = {
     nameValidator: { 
@@ -44,6 +45,7 @@ export const SignUp = () => {
     // navigate("/")
     
     try {
+      setLoading(true)
       const res = await axios.post("https://pg-finder-backend-ejx4.onrender.com/user/register",data)
       //console.log(res)
       if(res.status == 201){
@@ -57,6 +59,8 @@ export const SignUp = () => {
       //console.log(err.response)
       toast.error(err.response.data.message)
 
+    } finally {
+      setLoading(false)
     }
   }
   return (
@@ -131,8 +135,8 @@ export const SignUp = () => {
             {errors.password && <p className="text-red-500 text-xs">{errors.password.message}</p>}
           </div>
 
-          <button type="submit" className="w-full bg-blue-600 text-white font-bold py-3 rounded-md hover:bg-blue-700 transition">
-            Sign Up
+          <button type="submit" className="w-full bg-blue-600 text-white font-bold py-3 rounded-md hover:bg-blue-700 transition" disabled={loading}>
+            {loading ? 'Sign Up....' : 'Sign Up'}
           </button>
           <div className="pt-4 border-t border-gray-100 text-center">
             <p className="text-sm text-gray-600">

@@ -1,5 +1,5 @@
 import { Info, LayoutList } from 'lucide-react'
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -9,10 +9,12 @@ export const PGDetailForm = () => {
   const { id } = useParams()
   const { register, handleSubmit,watch, formState: { errors }} = useForm()
   const isFoodIncluded = watch('foodIncluded')
+  const [loading, setLoading] = useState(false)
 
   const amenities = ["LAUNDRY", "RO_WATER", "ROOM_CLEANING", "KITCHEN_ACCESS", "POWER_BACKUP", "LIFT", "WIFI", "WATER_COOLER", "FRIDGE", "MICROWAVE", "FIRST_AID", "WARDEN", "SECURITY_GUARD", "CCTV", "GYM"]
   const submitHandler = async(data) => {
     try{
+      setLoading(true)
       const res = await api.post('/pg/pg',{...data, propertyId: id})
 
       if(res?.status == 201){
@@ -22,6 +24,8 @@ export const PGDetailForm = () => {
     } catch(err){
       //console.log(err)
       toast.error(err?.message)
+    } finally {
+      setLoading(false)
     }
   }
   return (
@@ -160,7 +164,9 @@ export const PGDetailForm = () => {
 
         </div>
 
-        <button type='submit' className='w-full p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600'>SUBMIT</button>
+        <button type='submit' className='w-full p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600' disabled={loading}>
+          {loading ? 'SUBMITING....' : 'SUBMIT'}
+        </button>
       </form>
     </div>
     </div>

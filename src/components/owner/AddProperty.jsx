@@ -1,6 +1,6 @@
 import { Calendar, Info } from 'lucide-react'
-import React from 'react'
-import { useFieldArray, useForm } from 'react-hook-form'
+import React, { useState } from 'react'
+import { set, useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import api from '../../api/axiosInstance'
 
@@ -10,6 +10,7 @@ export const AddProperty = () => {
       gallery: [{ fileUrl: "", mediaType: "PHOTO", label: "" }]
     }
   })
+  const [loading, setLoading] = useState(false)
   const { fields, append, remove } = useFieldArray({ control, name: 'gallery'})
 
   const validationSchema = {
@@ -71,6 +72,7 @@ export const AddProperty = () => {
   });
 
   try {
+    set(true)
     // IMPORTANT: Use multipart/form-data for files
     //console.log(Object.fromEntries(formData))
     const res = await api.post('/property/property', formData, {
@@ -83,6 +85,8 @@ export const AddProperty = () => {
   } catch (err) {
     //console.error(err);
     toast.error(err.response?.data?.message || "Something went wrong");
+  } finally {
+    setLoading(false)
   }
 };
 
@@ -280,7 +284,9 @@ export const AddProperty = () => {
           </div>
         </div>
 
-        <button type='submit' className='w-full p-3 bg-blue-500 text-white rounded-md'>SUBMIT</button>
+        <button type='submit' className='w-full p-3 bg-blue-500 text-white rounded-md' disabled={loading}>
+          {loading ? 'SUBMITING.....': 'SUBMIT'}
+        </button>
       </form>
     </div>
     </div>

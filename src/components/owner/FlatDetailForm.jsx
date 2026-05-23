@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useForm } from "react-hook-form";
 import { BadgeIndianRupee, Info, LayoutList, Settings2, Watch } from 'lucide-react';
@@ -10,12 +10,14 @@ export const FlatDetailForm = () => {
   const { id } = useParams()
   const { register, handleSubmit,watch, formState: { errors }} = useForm()
   let parkingAvailable = watch('parking')
+  const [loading, setLoading] = useState(false)
 
   const aminities = ["GYM","NON_VEG_ALLOWED","LIFT","INTERCOM","SWIMMING_POOL","CLUB_HOUSE","SERVANT_ROOM","PIPED_GAS","PARK","SHOPPING_CENTER","RESERVED_PARKING","POWER_BACKUP","CCTV_SECURITY","VISITOR_PARKING", "FIRE_SAFETY"]
 
   const submitHandler = async(data) => {
     //console.log(data)
     try {
+      setLoading(true)
       const res = await api.post('/flat/flat',{...data, propertyId: id})
 
       if(res?.status == 201){
@@ -25,6 +27,8 @@ export const FlatDetailForm = () => {
     } catch(err){
       //console.log(err?.message)
       toast.error(err?.message)
+    } finally {
+      setLoading(false)
     }
   }
   return (
@@ -252,7 +256,9 @@ export const FlatDetailForm = () => {
           </section>
         </div>
 
-        <button type='submit' className='w-full p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600'>SUBMIT</button>
+        <button type='submit' className='w-full p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600' disabled={loading}>
+          {loading ? 'SUBMITING....' : 'SUBMIT'}
+        </button>
       </form>
     </div>
     </div>

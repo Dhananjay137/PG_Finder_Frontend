@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Info, LayoutList } from 'lucide-react'
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -9,12 +9,14 @@ import api from '../../api/axiosInstance'
 export const AddRoomForm = () => {
   const { id } = useParams()
   const { register, handleSubmit,watch, formState: { errors }} = useForm()
+  const [loading, setLoading] = useState(false)
 
   const amenities = ["TELEVISION", "AC_HEATING", "SINGLE_BED", "MATTRESS_PILLOW", "BLANKET", "TABLE_CHAIR", "SIDE_TABLE", "CUPBOARD", "HOT_WATER"]
 
   const submitHandler = async(data) => {
     try {
       //console.log(data)
+      setLoading(true)
       const res = await api.post(`/pg/pg/room`,{...data, propertyId: id})
       
       if(res?.status == 201) {
@@ -24,6 +26,8 @@ export const AddRoomForm = () => {
     } catch(err) {
       //console.log(err)
       toast.error(err?.message)
+    } finally {
+      setLoading(false)
     }
   }
   return (
@@ -101,7 +105,9 @@ export const AddRoomForm = () => {
           </section>
         </div>
 
-        <button type='submit' className='w-full p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600'>SUBMIT</button>
+        <button type='submit' className='w-full p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600' disabled={loading}>
+          {loading ? 'SUBMITING....' : 'SUBMIT'}
+        </button>
       </form>
     </div>
     </div>
