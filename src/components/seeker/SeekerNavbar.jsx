@@ -47,7 +47,7 @@ export const SeekerNavbar = () => {
         // 1. Filter bookings that meet the "2-day post check-in" criteria
         const pendingData = bookings
           .filter(booking => {
-            if (booking?.isFeedbackGiven) return false
+            if (['PENDING','REJECTED','CANCELLED'].includes(booking?.status) || booking?.isFeedbackGiven) return false
             const checkIn = new Date(booking?.expectedCheckInDate).getTime()
             return now >= (checkIn + twoDaysInMs)
           })
@@ -56,6 +56,7 @@ export const SeekerNavbar = () => {
             bookingID: booking._id,
             propertyID: booking.propertyID?._id
           }))
+          console.log(pendingData)
 
         setPendingFeedbacks(pendingData)
         setHasFeedbackPending(pendingData.length > 0)
